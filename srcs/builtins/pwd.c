@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:28:20 by noloupe           #+#    #+#             */
-/*   Updated: 2023/05/25 15:41:58 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:30:51 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ static int	pwd_strncmp(const char *s1, const char *s2, size_t n) //to utils
 
 void builtin_pwd(t_env *env)
 {
-	while (env && pwd_strncmp(env->key, "PWD", 4))
-	{
-		env = env->next;
-	}
-	printf("%s\n", env->value);
+	(void)env;
+	(void)pwd_strncmp("", "", 0);
+	char *str;
+
+	str = getcwd(NULL, 0);
+	if (str)
+		printf("%s\n", str);
 }
