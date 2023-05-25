@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/25 13:45:59 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:40:14 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ t_env *last_env(t_env *env);
 void print_env(t_env *env); //temp
 
 /*** BUILTINS ***/
+
+void builtins_tester(t_env *env);
+void builtin_pwd(t_env *env);
 
 #endif

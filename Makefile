@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/05/25 13:13:01 by noloupe          ###   ########.fr        #
+#    Updated: 2023/05/25 15:39:55 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME		=	minishell
 FILES		=	main.c\
 				env/env.c\
 				builtins/echo.c\
+				builtins/pwd.c\
+				builtins/tester.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

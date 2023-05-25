@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tester.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/25 15:39:39 by noloupe          ###   ########.fr       */
+/*   Created: 2023/05/25 15:37:54 by noloupe           #+#    #+#             */
+/*   Updated: 2023/05/25 15:39:05 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void builtins_tester(t_env *env)
 {
-	t_env *env;
-
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
-	{
-		printf("env failed\n");
-		return(1);
-	}
-	builtins_tester(env);
-	return (0);
+	print_env(env);
+	builtin_pwd(env);
 }
