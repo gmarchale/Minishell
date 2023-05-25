@@ -3,36 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/23 17:12:14 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:29:44 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env env;
+	t_env *env;
 
-	int	i = 0;
-	char	*env_variable = envp[i];
-
-	while (env_variable != NULL)
+	(void)argc; (void)argv;
+	env = env_init(envp);
+	if (!env)
 	{
-		env.next = NULL;
-		printf("%s\n", env_variable);
-		env.key = strtok(env_variable, "=");
-		env.value = strtok(NULL, "=");
-		printf("Key = %s\n", env.key);
-		printf("Value = %s\n\n", env.value);
-		env.next = NULL;
-		i++;
-		env_variable = envp[i];
+		printf("env failed\n");
+		return(1);
 	}
+	print_env(env);
 	return (0);
 }

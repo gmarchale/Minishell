@@ -3,63 +3,66 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/23 14:34:57 by gmarchal          #+#    #+#              #
-#    Updated: 2023/05/23 14:39:57 by gmarchal         ###   ########.fr        #
+#    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
+#    Updated: 2023/05/25 13:13:01 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	minishell
+NAME		=	minishell
 
-FILES	=	get_next_line/get_next_line.c \
-			get_next_line/get_next_line_utils.c \
+FILES		=	main.c\
+				env/env.c\
+				builtins/echo.c\
 
-SRC_DIR	= src
-OBJDIR	= obj
-INCDIR	= ${FT_PRINTF_DIR} ${LIBFT_DIR} ${GNL_DIR} src/mlx/mlx_macos
+SRCS		=	$(addprefix srcs/, $(FILES))
 
-SRC		= $(addprefix ${SRC_DIR}/, ${FILES})
-OBJ		= $(addprefix ${OBJDIR}/, $(addsuffix .o, $(basename ${FILES})))
-OBJ_DIR	= $(sort $(dir $(OBJ)))
+OBJS		=	$(SRCS:.c=.o)
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror #-fsanitize=address -g
-INCS		= $(foreach d, $(INCDIR), -I$d)
+CC			=	gcc
 
-# Libft
-LIBFT_DIR	= src/libft
-LIBFT		= ${LIBFT_DIR}/libft.a
+CFLAGS		=	-Wall -Werror -Wextra
 
-# ft_printf
-FT_PRINTF_DIR	= src/ft_printf
-FT_PRINTF		= ${FT_PRINTF_DIR}/libftprintf.a
+SANITIZE	=	-fsanitize=address -g
 
-# Get_next_line
-GNL_DIR		= src/get_next_line
+### LIB INCLUDES ###
 
-# Rules
-${OBJDIR}/%.o: ${SRC_DIR}/%.c
-			@mkdir -p ${OBJDIR} ${OBJ_DIR}
-			${CC} ${CFLAGS} ${INCS} -c -o $@ $<
+#XXXXX_DIR	=	
+#XXXXX		=	
 
-all:		${NAME}
+#DIRS		=	$(XXXXX)
 
-${NAME}:	${OBJ}
-			@make -C ${MLX_DIR}
-			@make -C ${LIBFT_DIR}
-			@make -C ${FT_PRINTF_DIR}
-			${CC} ${CFLAGS} ${OBJ} ${LIBFT} ${FT_PRINTF} ${MLX} -o ${NAME}
+### RULES ###
+
+$(NAME):		$(OBJS) #dirs
+				@echo "Compiling..."
+				@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+				@echo "Done."
+
+#dirs:
+#				@echo "Making xxxxx..."
+#				@make -C $(XXXXX_DIR)
+#				@echo "Xxxxx done."
+
+.c.o:
+				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+
+sanitize:		$(OBJS) #dirs
+				@echo "Compiling with sanitize..."
+				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) -o $(NAME)
+				@echo "Done."
+
+all:			$(NAME)
 
 clean:
-			@make clean -C ${MLX_DIR}
-			@make clean -C ${FT_PRINTF_DIR}
-			@make clean -C ${LIBFT_DIR}
-			rm -rf ${OBJDIR}
+				@echo "Cleaning..."
+				@rm -f $(OBJS)
+				@echo "Cleaned."
 
-fclean:		clean
-			@make fclean -C ${LIBFT_DIR}
-			@make fclean -C ${FT_PRINTF_DIR}
-			rm -f ${NAME}
+fclean:			clean
+				@rm -f $(NAME)
 
-re:			fclean all
+re :			fclean $(NAME)
+
+.PHONY: sanitize all clean fclean re
