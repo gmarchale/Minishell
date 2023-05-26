@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/04 13:14:42 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/10 10:57:18 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strdup(const char *s1)
 {
-	t_env *env;
+	char			*str;
+	unsigned int	i;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	str = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		printf("env failed\n");
-		return(1);
+		str[i] = s1[i];
+		++i;
 	}
-	builtins_tester(env);
-	return (0);
+	str[i] = '\0';
+	return (str);
 }

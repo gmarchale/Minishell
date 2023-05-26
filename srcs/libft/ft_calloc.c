@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 17:28:50 by noloupe           #+#    #+#             */
+/*   Updated: 2023/03/24 13:53:47 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_calloc(size_t count, size_t size)
 {
-	t_env *env;
+	void	*calloc;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
-	{
-		printf("env failed\n");
-		return(1);
-	}
-	builtins_tester(env);
-	return (0);
+	calloc = malloc(count * size);
+	if (!calloc)
+		return (NULL);
+	ft_bzero(calloc, count * size);
+	return (calloc);
 }

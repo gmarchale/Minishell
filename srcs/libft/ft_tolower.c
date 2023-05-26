@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 13:46:04 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/07 13:47:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_tolower(int c)
 {
-	t_env *env;
-
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
-	{
-		printf("env failed\n");
-		return(1);
-	}
-	builtins_tester(env);
-	return (0);
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
 }

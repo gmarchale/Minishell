@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/03 15:19:15 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/04 15:39:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <stdio.h>
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	t_env *env;
+	unsigned int	i;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	while (i < n)
 	{
-		printf("env failed\n");
-		return(1);
+		*(unsigned char *)(dst + i) = *(const unsigned char *)(src + i);
+		++i;
 	}
-	builtins_tester(env);
-	return (0);
+	return (dst);
 }

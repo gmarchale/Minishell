@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 15:16:36 by noloupe           #+#    #+#             */
+/*   Updated: 2023/04/10 15:58:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	t_env *env;
+	size_t		i;
+	const char	*str1;
+	const char	*str2;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!s1 && !s2)
+		return (0);
+	else if (!s1 || !s2)
+		return (-1);
+	str1 = s1;
+	str2 = s2;
+	i = 0;
+	while (i < n)
 	{
-		printf("env failed\n");
-		return(1);
+		if (str1[i] != str2[i])
+			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+		++i;
 	}
-	builtins_tester(env);
 	return (0);
 }

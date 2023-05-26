@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 10:19:29 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/07 10:24:29 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_putchar_fd(char c, int fd)
 {
-	t_env *env;
-
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
-	{
-		printf("env failed\n");
-		return(1);
-	}
-	builtins_tester(env);
-	return (0);
+	if (!fd)
+		return ;
+	write(fd, &c, 1);
 }

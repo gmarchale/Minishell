@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/20 14:17:15 by noloupe           #+#    #+#             */
+/*   Updated: 2023/03/27 15:30:47 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_putnbr_base(int fd, int nbr, char *base, int *count)
 {
-	t_env *env;
+	long int	nb;
+	int			baselen;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!base)
+		return ;
+	nb = nbr;
+	baselen = 0;
+	if (nb < 0)
 	{
-		printf("env failed\n");
-		return(1);
+		write(fd, "-", 1);
+		++(*count);
+		nb *= -1;
 	}
-	builtins_tester(env);
-	return (0);
+	while (base[baselen])
+		++baselen;
+	if (nb >= baselen)
+	{
+		ft_putnbr_base(fd, nb / baselen, base, count);
+		nb %= baselen;
+	}
+	if (nb < baselen)
+	{
+		write(fd, &base[nb], 1);
+		++(*count);
+	}
 }

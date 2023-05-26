@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   strjoin_free1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2023/03/24 16:39:28 by noloupe           #+#    #+#             */
+/*   Updated: 2023/03/30 11:33:02 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*strjoin_free1(char *s1, char const *s2)
 {
-	t_env *env;
+	char			*str;
+	unsigned int	i;
+	unsigned int	j;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
 	{
-		printf("env failed\n");
-		return(1);
+		str[i] = s1[i];
+		++i;
 	}
-	builtins_tester(env);
-	return (0);
+	j = 0;
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		++i;
+		++j;
+	}
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }

@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/10 15:08:28 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/14 11:54:29 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	t_env *env;
-
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!lst || !*f)
+		return ;
+	while (lst)
 	{
-		printf("env failed\n");
-		return(1);
+		f(lst->content);
+		lst = lst->next;
 	}
-	builtins_tester(env);
-	return (0);
 }

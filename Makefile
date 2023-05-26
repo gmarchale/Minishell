@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/05/25 15:39:55 by noloupe          ###   ########.fr        #
+#    Updated: 2023/05/26 14:15:16 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ FILES		=	main.c\
 				builtins/echo.c\
 				builtins/pwd.c\
 				builtins/tester.c\
+				builtins/export.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
@@ -30,39 +31,49 @@ SANITIZE	=	-fsanitize=address -g
 
 ### LIB INCLUDES ###
 
-#XXXXX_DIR	=	
-#XXXXX		=	
+LIBFT_DIR	=	srcs/libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
-#DIRS		=	$(XXXXX)
+PRINTF_DIR	=	srcs/ft_printf
+PRINTF		=	$(PRINTF_DIR)/libftprintf.a
+
+DIRS		=	$(PRINTF) $(LIBFT)
 
 ### RULES ###
 
-$(NAME):		$(OBJS) #dirs
+$(NAME):		$(OBJS) dirs
 				@echo "Compiling..."
-				@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) -o $(NAME)
 				@echo "Done."
 
-#dirs:
-#				@echo "Making xxxxx..."
-#				@make -C $(XXXXX_DIR)
-#				@echo "Xxxxx done."
+dirs:
+				@echo "Making libft..."
+				@make bonus -C $(LIBFT_DIR)
+				@echo "Libft done."
+				@echo "Making printf..."
+				@make -C $(PRINTF_DIR)
+				@echo "Printf done."
 
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-sanitize:		$(OBJS) #dirs
+sanitize:		$(OBJS) dirs
 				@echo "Compiling with sanitize..."
-				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) -o $(NAME)
 				@echo "Done."
 
 all:			$(NAME)
 
 clean:
 				@echo "Cleaning..."
+				@make clean -C $(LIBFT_DIR)
+				@make clean -C $(PRINTF_DIR)
 				@rm -f $(OBJS)
 				@echo "Cleaned."
 
 fclean:			clean
+				@make clean -C $(LIBFT_DIR)
+				@make clean -C $(PRINTF_DIR)
 				@rm -f $(NAME)
 
 re :			fclean $(NAME)

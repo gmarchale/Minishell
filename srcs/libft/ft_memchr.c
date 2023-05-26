@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   memchr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 14:45:26 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/07 15:16:02 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	t_env *env;
+	size_t				i;
+	const unsigned char	*str;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	str = s;
+	i = 0;
+	while (i < n)
 	{
-		printf("env failed\n");
-		return(1);
+		if (*str == (unsigned char)c)
+			return ((void *)str);
+		++i;
+		str++;
 	}
-	builtins_tester(env);
-	return (0);
+	return (NULL);
 }

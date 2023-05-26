@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/07 14:18:36 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/07 14:27:46 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_env *env;
+	const char	*p_s;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	p_s = s;
+	while (*s)
 	{
-		printf("env failed\n");
-		return(1);
+		if (*s == (char)c)
+			p_s = s;
+		s++;
 	}
-	builtins_tester(env);
-	return (0);
+	if (*s == (char)c)
+		return ((char *)s);
+	if (*p_s == (char)c)
+		return ((char *)p_s);
+	return (NULL);
 }

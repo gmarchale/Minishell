@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:03:53 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/20 16:12:46 by noloupe           #+#    #+#             */
+/*   Updated: 2023/03/27 15:30:57 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "ft_printf.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_putptr(int fd, unsigned long int nbr, char *base, int *count)
 {
-	t_env *env;
+	unsigned long int	baselen;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	baselen = ft_strlen(base);
+	if (nbr >= baselen)
 	{
-		printf("env failed\n");
-		return(1);
+		ft_putptr(fd, nbr / baselen, base, count);
+		nbr %= baselen;
 	}
-	builtins_tester(env);
-	return (0);
+	if (nbr < baselen)
+	{
+		write(fd, &base[nbr], 1);
+		++(*count);
+	}
 }
