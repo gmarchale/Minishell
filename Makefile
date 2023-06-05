@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/05/25 13:13:01 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/05 15:39:05 by gmarchal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME		=	minishell
 FILES		=	main.c\
 				env/env.c\
 				builtins/echo.c\
+				libft/str_utils.c
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
