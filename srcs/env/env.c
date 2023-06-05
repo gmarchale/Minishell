@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:58:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/05 15:06:07 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:16:33 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_env	*create_node(char *key, char *value)
 {
 	t_env	*new_node;
 
-	new_node = (t_env*)malloc(sizeof(t_env));
-	new_node->key = (char*)malloc(strlen(key) + 1);
-	new_node->value = (char*)malloc(strlen(value) + 1);
+	new_node = (t_env *)malloc(sizeof(t_env));
+	new_node->key = (char *)malloc(strlen(key) + 1);
+	new_node->value = (char *)malloc(strlen(value) + 1);
 	strcpy(new_node->key, key);
 	strcpy(new_node->value, value);
 	new_node->next = NULL;
