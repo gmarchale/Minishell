@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:53:40 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/10 13:38:50 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/14 11:53:31 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_env *env;
+	t_list	*last;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	if (!new)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
 	{
-		printf("env failed\n");
-		return(1);
+		last = ft_lstlast(*lst);
+		last->next = new;
 	}
-	builtins_tester(&env);
-	return (0);
 }

@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:53:40 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/03 14:21:45 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/03 17:08:22 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_isalnum(int c)
 {
-	t_env *env;
-
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
-	{
-		printf("env failed\n");
-		return(1);
-	}
-	builtins_tester(&env);
+	if (ft_isalpha(c) == 1 || ft_isdigit(c) == 1)
+		return (1);
 	return (0);
 }

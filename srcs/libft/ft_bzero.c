@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/05/26 14:53:40 by noloupe          ###   ########.fr       */
+/*   Created: 2022/10/03 15:13:47 by noloupe           #+#    #+#             */
+/*   Updated: 2022/10/03 17:13:37 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_bzero(void *s, size_t n)
 {
-	t_env *env;
+	size_t	i;
 
-	(void)argc; (void)argv;
-	env = env_init(envp);
-	if (!env)
+	i = 0;
+	while (i < n)
 	{
-		printf("env failed\n");
-		return(1);
+		*(unsigned char *)(s + i) = 0;
+		++i;
 	}
-	builtins_tester(&env);
-	return (0);
 }

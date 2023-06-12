@@ -14,10 +14,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include "../srcs/ft_printf/ft_printf.h"
+#include "../srcs/libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <unistd.h>
 
 /*** STRUCTURES ***/
 
@@ -38,7 +40,13 @@ void print_env(t_env *env); //temp
 
 /*** BUILTINS ***/
 
+void builtins_tester(t_env **env);
+void builtin_export(t_env **env, char *n_key, char *n_value);
+void builtin_pwd(t_env **env);
+void builtin_unset(t_env **env, char *key);
+
 /*** LIBFT ***/
+
 size_t	ft_strlen(const char *s);
 char	*ft_strcpy(char *dest, char *src);
 
