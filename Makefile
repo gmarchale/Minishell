@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/05 15:39:05 by gmarchal         ###   ########.fr        #
+#    Updated: 2023/06/12 15:56:04 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,8 +74,8 @@ clean:
 				@echo "Cleaned."
 
 fclean:			clean
-				@make clean -C $(LIBFT_DIR)
-				@make clean -C $(PRINTF_DIR)
+				@make fclean -C $(LIBFT_DIR)
+				@make fclean -C $(PRINTF_DIR)
 				@rm -f $(NAME)
 
 re :			fclean $(NAME)
