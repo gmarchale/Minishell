@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/05/26 15:05:27 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/05 15:39:05 by gmarchal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ FILES		=	main.c\
 				builtins/tester.c\
 				builtins/export.c\
 				builtins/unset.c\
+				libft/str_utils.c
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
