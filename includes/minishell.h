@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/05 15:48:59 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:49:46 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,19 @@ typedef struct s_env
 
 /*** ENV ***/
 
-t_env *env_init(char **envp);
-t_env *new_env_node(char *env_var);
-void add_env_back(t_env **env, t_env *new);
-t_env *last_env(t_env *env);
-void print_env(t_env *env); //temp
+void	add_node(t_env **head, char *key, char *value);
+t_env	*create_node(char *key, char *value);
+t_env	*env_init(char **envp);
+void	free_list(t_env *head);
+void	print_list(t_env *head);
+void	print_env(t_env *env); //temp
 
 /*** BUILTINS ***/
 
-void builtins_tester(t_env **env);
-void builtin_export(t_env **env, char *n_key, char *n_value);
-void builtin_pwd(t_env **env);
-void builtin_unset(t_env **env, char *key);
+void	builtins_tester(t_env **env);
+void	builtin_export(t_env **env, char *n_key, char *n_value);
+void	builtin_pwd(t_env **env);
+void	builtin_unset(t_env **env, char *key);
 
 /*** LIBFT ***/
 
