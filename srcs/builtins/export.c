@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/05/26 14:24:16 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/05/26 14:54:14 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static int export_parsing(char *n_key)
 	return (1);
 }	
 
-void builtin_export(t_env *env, char *n_key, char *n_value) //change arguments to struct
+void builtin_export(t_env **env, char *n_key, char *n_value) //change arguments to struct
 {
 	if (!export_parsing(n_key))
 	{
 		ft_printf(2, "minishell: export: `%s': not a valid indentifier\n", n_key);
 		return ;
 	}
-	add_env_back(&env, new_node(n_key, n_value));	
+	add_env_back(env, new_node(n_key, n_value));	
 }

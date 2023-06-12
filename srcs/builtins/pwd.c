@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:28:20 by noloupe           #+#    #+#             */
-/*   Updated: 2023/05/25 16:30:51 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/05/26 14:53:49 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	pwd_strncmp(const char *s1, const char *s2, size_t n) //to utils
 	return ((unsigned char)s1[i] - s2[i]);
 }
 
-void builtin_pwd(t_env *env)
+void builtin_pwd(t_env **env)
 {
 	(void)env;
 	(void)pwd_strncmp("", "", 0);

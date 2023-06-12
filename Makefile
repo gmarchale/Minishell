@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/05/26 14:15:16 by noloupe          ###   ########.fr        #
+#    Updated: 2023/05/26 15:05:27 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ FILES		=	main.c\
 				builtins/pwd.c\
 				builtins/tester.c\
 				builtins/export.c\
+				builtins/unset.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
