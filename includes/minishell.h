@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/13 16:55:20 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/13 17:46:27 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	print_env(t_env *env); //temp
 /*** BUILTINS ***/
 
 void	builtins_tester(t_env **env);
+void	builtin_echo(char **str);
 void	builtin_env(t_env **env);
 void	builtin_exit(int arg);
 void	builtin_export(t_env **env, char *n_key, char *n_value);
