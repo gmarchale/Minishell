@@ -6,21 +6,22 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/13 16:28:19 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/13 16:55:56 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 FILES		=	main.c\
-				env/env.c\
 				builtins/echo.c\
 				builtins/env.c\
+				builtins/exit.c\
+				builtins/export.c\
 				builtins/pwd.c\
 				builtins/tester.c\
-				builtins/export.c\
 				builtins/unset.c\
-				libft/str_utils.c
+				env/env.c\
+				libft/str_utils.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
