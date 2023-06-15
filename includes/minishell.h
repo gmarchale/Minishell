@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/13 17:46:27 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:50:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../srcs/ft_printf/ft_printf.h"
-#include "../srcs/libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+# include "../srcs/ft_printf/ft_printf.h"
+# include "../srcs/libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /*** STRUCTURES ***/
 
@@ -29,6 +31,10 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+/*** MAIN ***/
+
+char	*readline(const char *prompt);
 
 /*** ENV ***/
 
@@ -41,7 +47,7 @@ void	print_env(t_env *env); //temp
 
 /*** BUILTINS ***/
 
-void	builtins_tester(t_env **env);
+void	builtins_tester(t_env **env, char *line);
 void	builtin_echo(char **str);
 void	builtin_env(t_env **env);
 void	builtin_exit(int arg);

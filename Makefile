@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/13 16:55:56 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/15 14:29:08 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ CC			=	gcc
 
 CFLAGS		=	-Wall -Werror -Wextra
 
+READL		=	-L/usr/local/lib -I/usr/local/include -lreadline -L $(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
+
 SANITIZE	=	-fsanitize=address -g
 
 ### LIB INCLUDES ###
@@ -47,7 +49,7 @@ DIRS		=	$(PRINTF) $(LIBFT)
 
 $(NAME):		$(OBJS) dirs
 				@echo "Compiling..."
-				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) $(READL) -o $(NAME)
 				@echo "Done."
 
 dirs:
@@ -63,7 +65,7 @@ dirs:
 
 sanitize:		$(OBJS) dirs
 				@echo "Compiling with sanitize..."
-				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) $(READL) -o $(NAME)
 				@echo "Done."
 
 all:			$(NAME)
