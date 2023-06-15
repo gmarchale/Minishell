@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:59:23 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/13 17:58:53 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/15 10:35:08 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,12 @@ void builtin_echo(char **str)
 		else
 			break ;
 	}
-	printf("new_line: %d\nnext str: %s\n", new_line, str[i]);
+	while (str[i + 1])
+	{
+		ft_printf(1, "%s ", str[i]);
+		i++;
+	}
+	ft_printf(1, "%s", str[i]);
+	if (new_line == 1)
+		ft_printf(1, "\n");
 }
