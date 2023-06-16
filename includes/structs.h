@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/16 14:19:15 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:56:56 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_redir
+{
+	char			*key;
+	int				mode;
+	struct s_redir	*next;
+}			t_redir;
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	t_redir			*redir;
+	struct s_cmd	*next;
+}			t_cmd;
 
 typedef struct s_shell
 {
