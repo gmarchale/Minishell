@@ -6,13 +6,14 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/15 14:29:08 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/16 11:05:31 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 FILES		=	main.c\
+				builtins/cmd_utils.c\
 				builtins/echo.c\
 				builtins/env.c\
 				builtins/exit.c\

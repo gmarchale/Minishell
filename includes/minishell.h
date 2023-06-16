@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:16 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:04:19 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_shell
+{
+	t_env *env;
+}	t_shell;
+
+t_shell *shell;
+
 /*** MAIN ***/
 
 char	*readline(const char *prompt);
@@ -45,15 +52,16 @@ void	free_list(t_env *head);
 void	print_list(t_env *head);
 void	print_env(t_env *env); //temp
 
-/*** BUILTINS ***/
+/*** EXEC ***/
 
-void	builtins_tester(t_env **env, char *line);
+void	builtins_tester(char *line);
 void	builtin_echo(char **str);
 void	builtin_env(t_env **env);
 void	builtin_exit(int arg);
 void	builtin_export(t_env **env, char *n_key, char *n_value);
 void	builtin_pwd(t_env **env);
 void	builtin_unset(t_env **env, char *key);
+int		key_check(char *key, char *word);
 
 /*** LIBFT ***/
 

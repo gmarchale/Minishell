@@ -6,28 +6,34 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:37:54 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/15 14:56:17 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:14:19 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void builtins_tester(t_env **env, char *line)
+void builtins_tester(char *line)
 {
-	(void) env;
 	char **s_line;
 	
-	//builtin_pwd(env);
-	//print_env(*env);
-	// builtin_export(env, "test", "test");
-	// builtin_export(env, "SHLVL", "test2");
-	// builtin_export(env, "%test", "test3");
-	// builtin_export(env, "test", "test4");
-	// builtin_unset(env, "_");
-	// builtin_unset(env, "test");
-	// builtin_unset(env, "SECURITYSESSIONID");
-	// builtin_env(env);
+	if (!line)
+		return ;
 	s_line = ft_split(line, ' ');
-	builtin_echo(s_line);
-	// builtin_exit(0);
+	if (!s_line)
+		return ;
+	if (key_check(s_line[0], "echo"))
+	{
+		// ft_printf(1, "found %s\n", s_line[0]);
+		builtin_echo(s_line);
+	}
+	// else if (key_check(s_line[0], "cd"))
+	// 	builtin_cd(s_line);
+	// else if (key_check(s_line[0], "pwd"))
+	// 	builtin_pwd(s_line);
+	// else if (key_check(s_line[0], "export"))
+	// 	builtin_export(s_line);
+	// else if (key_check(s_line[0], "unset"))
+	// 	builtin_unset(s_line);
+	// else if (key_check(s_line[0], "exit"))
+	// 	builtin_exit(s_line);
 }
