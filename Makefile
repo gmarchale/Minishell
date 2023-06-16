@@ -6,20 +6,23 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/12 15:56:04 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/16 11:05:31 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 FILES		=	main.c\
-				env/env.c\
+				builtins/cmd_utils.c\
 				builtins/echo.c\
+				builtins/env.c\
+				builtins/exit.c\
+				builtins/export.c\
 				builtins/pwd.c\
 				builtins/tester.c\
-				builtins/export.c\
 				builtins/unset.c\
-				libft/str_utils.c
+				env/env.c\
+				libft/str_utils.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
@@ -28,6 +31,8 @@ OBJS		=	$(SRCS:.c=.o)
 CC			=	gcc
 
 CFLAGS		=	-Wall -Werror -Wextra
+
+READL		=	-L/usr/local/lib -I/usr/local/include -lreadline -L $(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 
 SANITIZE	=	-fsanitize=address -g
 
@@ -45,7 +50,7 @@ DIRS		=	$(PRINTF) $(LIBFT)
 
 $(NAME):		$(OBJS) dirs
 				@echo "Compiling..."
-				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) $(READL) -o $(NAME)
 				@echo "Done."
 
 dirs:
@@ -61,7 +66,7 @@ dirs:
 
 sanitize:		$(OBJS) dirs
 				@echo "Compiling with sanitize..."
-				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) $(READL) -o $(NAME)
 				@echo "Done."
 
 all:			$(NAME)

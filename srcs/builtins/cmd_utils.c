@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/13 16:48:12 by noloupe          ###   ########.fr       */
+/*   Created: 2023/06/16 10:50:02 by noloupe           #+#    #+#             */
+/*   Updated: 2023/06/16 10:54:35 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void builtin_unset(t_env **env, char *key)
+int key_check(char *key, char *word)
 {
-	t_env *tmp;
-	t_env *prev;
+	size_t	key_len;
+	size_t	word_len;
 
-	tmp = *env;
-	prev = NULL;
-	while (tmp)
-	{
-		if (!ft_memcmp(tmp->key, key, ft_strlen(key)))
-		{
-			if (prev == NULL)
-				*env = tmp->next;
-			else
-				prev->next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-		}
-		prev = tmp;
-		tmp = tmp->next;
-	}
+	if (!key || !word)
+		return (0);
+	key_len = ft_strlen(key);
+	word_len = ft_strlen(word);
+	if (word_len == key_len && !ft_strncmp(key, word, key_len))
+		return (1);
+	return (0);
 }

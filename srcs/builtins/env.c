@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/13 16:48:12 by noloupe          ###   ########.fr       */
+/*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
+/*   Updated: 2023/06/13 16:27:18 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void builtin_unset(t_env **env, char *key)
+void builtin_env(t_env **env)
 {
 	t_env *tmp;
-	t_env *prev;
 
 	tmp = *env;
-	prev = NULL;
 	while (tmp)
 	{
-		if (!ft_memcmp(tmp->key, key, ft_strlen(key)))
-		{
-			if (prev == NULL)
-				*env = tmp->next;
-			else
-				prev->next = tmp->next;
-			free(tmp->key);
-			free(tmp->value);
-			free(tmp);
-		}
-		prev = tmp;
+		ft_printf(1, "%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }
