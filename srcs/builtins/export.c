@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 14:55:45 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:00:01 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ static int check_doubles(t_env **env, char *n_key)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_memcmp(tmp->key, n_key, ft_strlen(n_key)))
-		{
+		if (key_check(tmp->key, n_key))
 			return (1);
-		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -74,7 +72,7 @@ static void export_var(char **n_key, char **n_value)
 		add_node(&shell->env, *n_key, *n_value);
 		return ;
 	}
-	while (ft_memcmp(tmp->key, *n_key, ft_strlen(*n_key)))
+	while (!key_check(tmp->key, *n_key))
 		tmp = tmp->next;
 	free(tmp->value);
 	tmp->value = ft_strdup(*n_value);

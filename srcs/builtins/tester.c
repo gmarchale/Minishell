@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:37:54 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 14:57:38 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:53:14 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void builtins_tester(char *line)
 	// 	builtin_pwd(s_line);
 	else if (key_check(s_line[0], "export"))
 		builtin_export(s_line);
-	// else if (key_check(s_line[0], "unset"))
-	// 	builtin_unset(s_line);
+	else if (key_check(s_line[0], "unset"))
+		builtin_unset(s_line);
 	else if (key_check(s_line[0], "env"))
 		builtin_env(s_line);
 	else if (key_check(s_line[0], "exit"))
