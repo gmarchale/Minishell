@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:52:48 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/16 16:20:42 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:39:09 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int is_overflow(long int arg, int neg)
 {
-	if ((arg > INT_MAX && neg > 0) || (arg > (long int)(INT_MIN) && neg < 0))
+	if ((arg > INT_MAX && neg > 0) || (arg > (unsigned int)INT_MIN && neg < 0))
 		return (1);
 	return (0);
 }
@@ -36,9 +36,9 @@ long int check_arg(char *str, int *overflow)
 	arg = 0;
 	while (str[i])
 	{
-		if (!ft_isdigit((int)str[i]) || is_overflow(arg, neg))
+		if (!ft_isdigit(str[i]) || is_overflow(arg, neg))
 		{
-			if (!ft_isdigit((int)str[i]))
+			if (!ft_isdigit(str[i]))
 				*overflow = 1;
 			return (arg * neg);
 		}
