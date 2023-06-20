@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/16 11:05:31 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/20 12:58:09 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,18 +48,16 @@ DIRS		=	$(PRINTF) $(LIBFT)
 
 ### RULES ###
 
-$(NAME):		$(OBJS) dirs
-				@echo "Compiling..."
-				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) $(READL) -o $(NAME)
-				@echo "Done."
-
-dirs:
+$(NAME):		$(OBJS)
 				@echo "Making libft..."
 				@make bonus -C $(LIBFT_DIR)
 				@echo "Libft done."
 				@echo "Making printf..."
 				@make -C $(PRINTF_DIR)
 				@echo "Printf done."
+				@echo "Compiling..."
+				@$(CC) $(CFLAGS) $(OBJS) $(DIRS) $(READL) -o $(NAME)
+				@echo "Done."
 
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
