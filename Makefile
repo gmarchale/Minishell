@@ -6,21 +6,22 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/20 12:58:09 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/20 17:22:57 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 FILES		=	main.c\
+				builtins/tester.c\
 				builtins/cmd_utils.c\
 				builtins/echo.c\
+				builtins/cd.c\
+				builtins/pwd.c\
+				builtins/export.c\
+				builtins/unset.c\
 				builtins/env.c\
 				builtins/exit.c\
-				builtins/export.c\
-				builtins/pwd.c\
-				builtins/tester.c\
-				builtins/unset.c\
 				env/env.c\
 				libft/str_utils.c\
 
@@ -62,7 +63,13 @@ $(NAME):		$(OBJS)
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-sanitize:		$(OBJS) dirs
+sanitize:		$(OBJS)
+				@echo "Making libft..."
+				@make bonus -C $(LIBFT_DIR)
+				@echo "Libft done."
+				@echo "Making printf..."
+				@make -C $(PRINTF_DIR)
+				@echo "Printf done."
 				@echo "Compiling with sanitize..."
 				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) $(READL) -o $(NAME)
 				@echo "Done."
