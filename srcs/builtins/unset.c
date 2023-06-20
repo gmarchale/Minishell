@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 17:22:34 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/20 10:01:39 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void unset_var(char *key)
 			else
 				prev->next = tmp->next;
 			free(tmp->key);
-			free(tmp->value);
+			if (tmp->value)
+				free(tmp->value);
 			free(tmp);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 17:00:01 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/20 10:15:12 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ static void export_var(char **n_key, char **n_value)
 	}
 	while (!key_check(tmp->key, *n_key))
 		tmp = tmp->next;
-	free(tmp->value);
-	tmp->value = ft_strdup(*n_value);
+	if (tmp->value)
+		free(tmp->value);
+	tmp->value = NULL;
+	if (*n_value)
+		tmp->value = ft_strdup(*n_value);
 }
 
 void builtin_export(char **str)
@@ -86,22 +89,23 @@ void builtin_export(char **str)
 	
 	i = 1;
 	if (!str[i])
-		return ; // print list w/ "declare -x"
+		return (builtin_env(str, EXPORT));
+	n_value = NULL;
 	while (str[i])
 	{
+		n_key = ft_strdup(str[i]);
 		if (!parse_var(str[i]))
-			ft_printf(1, "need to add %s for export\n", str[i]); // to add for export
+			export_var(&n_key, &n_value);
 		else
 		{
-			n_key = ft_strdup(str[i]);
 			n_value = n_key;
 			while (*n_value != '=')
 				n_value++;
 			*n_value = '\0';
 			n_value++;
 			export_var(&n_key, &n_value);
-			free(n_key);
 		}
+		free(n_key);
 		i++;
 	}
 }

@@ -6,21 +6,43 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:58:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/05 15:49:18 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:34:24 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_env *free_node_error(t_env *node, int MODE)
+{
+	if (MODE == KEY)
+		free(node);
+	else if (MODE == VALUE)
+	{
+		free(node->key);
+		free(node);
+	}
+	return (NULL);
+}
 
 t_env	*create_node(char *key, char *value)
 {
 	t_env	*new_node;
 
 	new_node = (t_env *)malloc(sizeof(t_env));
+	if (!new_node)
+		return (free_node_error(new_node, NODE));
 	new_node->key = (char *)malloc(ft_strlen(key) + 1);
-	new_node->value = (char *)malloc(ft_strlen(value) + 1);
+	if (!new_node->key)
+		return (free_node_error(new_node, KEY));
+	new_node->value = NULL;
 	ft_strcpy(new_node->key, key);
-	ft_strcpy(new_node->value, value);
+	if (value)
+	{
+		new_node->value = (char *)malloc(ft_strlen(value) + 1);
+		if (!new_node->value)
+			return (free_node_error(new_node, VALUE));
+		ft_strcpy(new_node->value, value);
+	}
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -31,17 +53,15 @@ void	add_node(t_env **head, char *key, char *value)
 	t_env	*current;
 
 	new_node = create_node(key, value);
+	if (!new_node)
+		return ;
 	if (*head == NULL)
-	{
 		*head = new_node;
-	}
 	else
 	{
 		current = *head;
 		while (current->next != NULL)
-		{
 			current = current->next;
-		}
 		current->next = new_node;
 	}
 }
@@ -66,8 +86,10 @@ void	free_list(t_env *head)
 	{
 		temp = head;
 		head = head->next;
-		free(temp->key);
-		free(temp->value);
+		if (temp->key)
+			free(temp->key);
+		if (temp->value)
+			free(temp->value);
 		free(temp);
 	}
 }
