@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:17:51 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/16 14:18:48 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:08:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 void	builtins_tester(char *line);
 void	builtin_echo(char **str);
-void	builtin_env(t_env **env);
-void	builtin_exit(int arg);
-void	builtin_export(t_env **env, char *n_key, char *n_value);
-void	builtin_pwd(t_env **env);
-void	builtin_unset(t_env **env, char *key);
+void	builtin_env(char **str, int MODE);
+void	builtin_exit(char **str);
+void	builtin_export(char **str);
+void	builtin_pwd(void);
+void	builtin_unset(char **str);
 int		key_check(char *key, char *word);
 
 #endif

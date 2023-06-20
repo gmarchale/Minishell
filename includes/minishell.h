@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/16 14:20:48 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:06:20 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # include "structs.h"
 # include "parser.h"
 # include "exec.h"
+
+/*** ENUMS ***/
+
+enum	node_error		{NODE, KEY, VALUE};
+enum	env_printing	{ENV, EXPORT};
 
 /*** GLOBAL ***/
 
