@@ -20,6 +20,20 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_redir
+{
+	char			*key;
+	int				mode;
+	struct s_redir	*next;
+}			t_redir;
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	t_redir			*redir;
+	struct s_cmd	*next;
+}			t_cmd;
+
 typedef struct s_shell
 {
 	int	exit_value;
