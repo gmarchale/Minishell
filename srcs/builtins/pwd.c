@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:28:20 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 18:00:55 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/24 09:59:54 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void builtin_pwd(void)
 		printf("%s\n", str);
 	else
 		perror("pwd");
+	free(str);
 }
