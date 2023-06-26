@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:00:52 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/24 11:00:56 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:28:23 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	is_key_set(char *key)
 {
-	t_env *tmp;
-	
+	t_env	*tmp;
+
 	tmp = shell->env;
-	return(go_to_key(&tmp, key));
+	return (go_to_key(&tmp, key));
 }
 
-void change_env_pwd(void)
+void	change_env_pwd(void)
 {
 	t_env	*pwd;
 	t_env	*old_pwd;
-	
+
 	old_pwd = shell->env;
 	pwd = shell->env;
 	if (go_to_key(&pwd, "PWD"))
@@ -47,10 +47,11 @@ void change_env_pwd(void)
 		old_pwd->value = NULL;
 	}
 }
-void go_to_home(void)
+
+void	go_to_home(void)
 {
 	char	*home;
-	
+
 	if (!is_key_set("HOME"))
 	{
 		ft_printf(1, "minishell: cd: HOME not set\n");
@@ -66,7 +67,7 @@ void go_to_home(void)
 		ft_printf(1, "minishell: cd: HOME not set\n");
 }
 
-void builtin_cd(char **str)
+void	builtin_cd(char **str)
 {
 	if (str[1] && str[2])
 	{

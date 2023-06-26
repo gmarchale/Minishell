@@ -6,20 +6,20 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:52:48 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/19 09:39:09 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:33:48 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int is_overflow(long int arg, int neg)
+static int	is_overflow(long int arg, int neg)
 {
 	if ((arg > INT_MAX && neg > 0) || (arg > (unsigned int)INT_MIN && neg < 0))
 		return (1);
 	return (0);
 }
 
-long int check_arg(char *str, int *overflow)
+long int	check_arg(char *str, int *overflow)
 {
 	int			i;
 	int			neg;
@@ -48,11 +48,11 @@ long int check_arg(char *str, int *overflow)
 	return (arg * neg);
 }
 
-void builtin_exit(char **str)
+void	builtin_exit(char **str)
 {
 	long	arg;
 	int		overflow;
-	
+
 	ft_printf(1, "exit\n");
 	if (!str[1])
 		exit(shell->exit_value);

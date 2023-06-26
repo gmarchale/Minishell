@@ -6,16 +6,16 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:37:54 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/20 17:21:30 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:33:26 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void builtins_tester(char *line)
+void	builtins_tester(char *line)
 {
-	char **s_line;
-	
+	char	**s_line;
+
 	if (!line)
 		exit(EXIT_FAILURE);
 	s_line = ft_split(line, ' ');
@@ -23,8 +23,8 @@ void builtins_tester(char *line)
 		return ;
 	if (key_check(s_line[0], "echo"))
 		builtin_echo(s_line);
-	 else if (key_check(s_line[0], "cd"))
-	 	builtin_cd(s_line);
+	else if (key_check(s_line[0], "cd"))
+		builtin_cd(s_line);
 	else if (key_check(s_line[0], "pwd"))
 		builtin_pwd();
 	else if (key_check(s_line[0], "export"))

@@ -6,13 +6,13 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:50:02 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/20 17:17:28 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:28:59 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int go_to_key(t_env **tmp, char *key)
+int	go_to_key(t_env **tmp, char *key)
 {
 	while (*tmp)
 	{
@@ -23,7 +23,7 @@ int go_to_key(t_env **tmp, char *key)
 	return (0);
 }
 
-char *dup_env_value(char *key)
+char	*dup_env_value(char *key)
 {
 	t_env	*tmp;
 	char	*value;
@@ -35,7 +35,7 @@ char *dup_env_value(char *key)
 	return (value);
 }
 
-int key_check(char *key, char *word)
+int	key_check(char *key, char *word)
 {
 	size_t	key_len;
 	size_t	word_len;

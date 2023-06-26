@@ -6,15 +6,15 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/20 10:15:12 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:37:43 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int check_doubles(t_env **env, char *n_key)
+static int	check_doubles(t_env **env, char *n_key)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
 	while (tmp)
@@ -26,7 +26,7 @@ static int check_doubles(t_env **env, char *n_key)
 	return (0);
 }
 
-static int export_parsing(char *n_key)
+static int	export_parsing(char *n_key)
 {
 	int	i;
 
@@ -43,9 +43,9 @@ static int export_parsing(char *n_key)
 	return (1);
 }	
 
-static int parse_var(char *str)
+static int	parse_var(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -57,17 +57,18 @@ static int parse_var(char *str)
 	return (0);
 }
 
-static void export_var(char **n_key, char **n_value)
+static void	export_var(char **n_key, char **n_value)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = shell->env;
 	if (!export_parsing(*n_key))
 	{
-		ft_printf(2, "minishell: export: `%s': not a valid indentifier\n", *n_key);
+		ft_printf(2, "minishell: export: '%s': \
+		not a valid indentifier\n", *n_key);
 		return ;
 	}
-	if (!check_doubles(&shell->env, *n_key)) 
+	if (!check_doubles(&shell->env, *n_key))
 	{
 		add_node(&shell->env, *n_key, *n_value);
 		return ;
@@ -81,12 +82,12 @@ static void export_var(char **n_key, char **n_value)
 		tmp->value = ft_strdup(*n_value);
 }
 
-void builtin_export(char **str)
+void	builtin_export(char **str)
 {
 	char	*n_key;
 	char	*n_value;
 	int		i;
-	
+
 	i = 1;
 	if (!str[i])
 		return (builtin_env(str, EXPORT));
