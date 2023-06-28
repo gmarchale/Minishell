@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/20 12:58:09 by noloupe          ###   ########.fr        #
+#    Updated: 2023/06/28 22:12:07 by gmarchal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,10 @@ FILES		=	main.c\
 				builtins/unset.c\
 				env/env.c\
 				libft/str_utils.c\
+				parser/lexer.c\
+				parser/lexer_utils.c\
+				parser/lex_list.c\
+				parser/mini_utils.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
