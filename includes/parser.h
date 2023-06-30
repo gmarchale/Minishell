@@ -6,7 +6,7 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/29 15:30:26 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:23:18 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	ft_exit_failure(char *str);
 int	is_token(char *str);
 int	size_quotes(const char *str);
 t_lexlst	*lexer(char *cmd_line);
+
+/*** LEXER_UTILS ***/
+
+int	checker_quotes(char *line, int s, int d);
+int	check_token_ends(char *line);
+int	skip_quotes(char *line, int *dq);
 
 /*** LEX_LIST ***/
 

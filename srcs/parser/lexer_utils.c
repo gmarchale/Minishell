@@ -1,6 +1,11 @@
 #include "../../includes/minishell.h"
 
-int	checker_quotes(char *line, int s, int d) //not used yet
+/*
+ *	Checks if single quotes and doubles quotes are ended
+ *	Return 0 if OK
+ *	return 1 if KO
+ */
+int	checker_quotes(char *line, int s, int d)
 {
 	while (*line)
 	{
@@ -55,7 +60,7 @@ int	is_token(char *str)
 	return (0);
 }
 
-int	check_token_ends(char *line) //not used yet
+int	check_token_ends(char *line)
 {
 	while (*line == ' ')
 		line++;
@@ -73,7 +78,7 @@ int	check_token_ends(char *line) //not used yet
 	return (0);
 }
 
-int	skip_quotes(char *line, int *dq) //not used yet
+int	skip_quotes(char *line, int *dq)
 {
 	int	i;
 
