@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	checker_quotes(char *line, int s, int d)
+int	checker_quotes(char *line, int s, int d) //not used yet
 {
 	while (*line)
 	{
@@ -55,7 +55,7 @@ int	is_token(char *str)
 	return (0);
 }
 
-int	check_token_ends(char *line)
+int	check_token_ends(char *line) //not used yet
 {
 	while (*line == ' ')
 		line++;
@@ -73,7 +73,7 @@ int	check_token_ends(char *line)
 	return (0);
 }
 
-int	skip_quotes(char *line, int *dq)
+int	skip_quotes(char *line, int *dq) //not used yet
 {
 	int	i;
 
@@ -92,31 +92,3 @@ int	skip_quotes(char *line, int *dq)
 	return (i);
 }
 
-t_lexlst	*lexlst_new(void *content)
-{
-	t_lexlst	*ele;
-
-	ele = NULL;
-	if (!content)
-		return (ele);
-	ele = malloc(sizeof(t_lexlst));
-	if (!ele)
-		ft_exit_failure("malloc");
-	ele->word = content;
-	ele->next = NULL;
-	return (ele);
-}
-
-void	lexlst_clear(t_lexlst **lst)
-{
-	t_lexlst	*tmp;
-
-	tmp = NULL;
-	while (*lst)
-	{
-		tmp = *lst;
-		*lst = (*lst)->next;
-		free(tmp->word);
-		free(tmp);
-	}
-}

@@ -40,7 +40,7 @@ void	lex_lstadd_back(t_lexlst **lst, t_lexlst *new)
 		return ;
 	if (new)
 	{
-		if (!*lst) //changer qq chose jai oublie 
+		if (!*lst)
 		{
 			*lst = new;
 			return ;
@@ -48,4 +48,33 @@ void	lex_lstadd_back(t_lexlst **lst, t_lexlst *new)
 	}
 	last = lex_lstlast(*lst, 0);
 	last->next = new;
+}
+
+t_lexlst	*lexlst_new(void *content)
+{
+	t_lexlst	*ele;
+
+	ele = NULL;
+	if (!content)
+		return (ele);
+	ele = malloc(sizeof(t_lexlst));
+	if (!ele)
+		ft_exit_failure("malloc");
+	ele->word = content;
+	ele->next = NULL;
+	return (ele);
+}
+
+void	lexlst_clear(t_lexlst **lst)
+{
+	t_lexlst	*tmp;
+
+	tmp = NULL;
+	while (*lst)
+	{
+		tmp = *lst;
+		*lst = (*lst)->next;
+		free(tmp->word);
+		free(tmp);
+	}
 }

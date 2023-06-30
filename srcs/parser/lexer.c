@@ -25,6 +25,10 @@ static int	get_new_i(int i, char *cmd_line)
 	return (i);
 }
 
+/* 
+ * Skips every spaces and uses get_new_i to handle single quotes and double quotes
+ */
+
 t_lexlst	*ft_split_lexer(char *cmd_line, t_lexlst *lexer_lst)
 {
 	int		i;
@@ -52,6 +56,11 @@ t_lexlst	*ft_split_lexer(char *cmd_line, t_lexlst *lexer_lst)
 	return (lexer_lst);
 }
 
+/* 
+ * Puts every word from command line input in a linked list of type lexlst
+ * Each word being one node
+ */
+
 t_lexlst	*lexer(char *cmd_line)
 {
 	t_lexlst	*lexer_lst;
@@ -60,26 +69,3 @@ t_lexlst	*lexer(char *cmd_line)
 	lexer_lst = ft_split_lexer(cmd_line, lexer_lst);
 	return (lexer_lst);
 }
-
-/*
-t_list	*tokenize(char *input_string)
-{
-	int		i;
-	t_list	*head;
-	t_list	*curr;
-	char 	**split_space;
-
-	i = 0;
-	head = NULL;
-	split_space = ft_split(input_string, ' ');
-	while (split_space[i])
-	{
-		curr = ft_lstnew(split_space);
-		ft_lstadd_back(&head, curr);
-		i++;
-	}
-	free(split_space);
-	free(curr);
-	return (head);
-}
-*/
