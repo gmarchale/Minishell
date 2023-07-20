@@ -6,13 +6,13 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/20 10:01:39 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:29:18 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void unset_var(char *key)
+void	unset_var(char *key)
 {
 	t_env	*tmp;
 	t_env	*prev;
@@ -38,11 +38,11 @@ void unset_var(char *key)
 	}
 }
 
-void builtin_unset(char **str)
+void	builtin_unset(char **str)
 {
 	char	*key;
 	int		i;
-	
+
 	i = 1;
 	if (!str[i])
 		return ;

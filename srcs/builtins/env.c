@@ -6,13 +6,13 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/20 12:03:24 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:37:08 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void sort_env(t_env **cpy)
+void	sort_env(t_env **cpy)
 {
 	t_env	*tmp;
 	char	*tmp_key;
@@ -21,7 +21,8 @@ void sort_env(t_env **cpy)
 	tmp = *cpy;
 	while (tmp->next)
 	{
-		if(ft_strncmp(tmp->key, tmp->next->key, (ft_strlen(tmp->next->key) + 1)) > 0)
+		if (ft_strncmp(tmp->key, tmp->next->key, \
+		(ft_strlen(tmp->next->key) + 1)) > 0)
 		{
 			tmp_key = tmp->key;
 			tmp_value = tmp->value;
@@ -36,11 +37,11 @@ void sort_env(t_env **cpy)
 	}
 }
 
-t_env *create_sorted_env_cpy(void)
+t_env	*create_sorted_env_cpy(void)
 {
 	t_env	*tmp;
 	t_env	*cpy;
-	
+
 	cpy = NULL;
 	tmp = shell->env;
 	while (tmp)
@@ -52,9 +53,9 @@ t_env *create_sorted_env_cpy(void)
 	return (cpy);
 }
 
-void export_print(void)
+void	export_print(void)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = create_sorted_env_cpy();
 	while (tmp)
@@ -68,9 +69,9 @@ void export_print(void)
 	free_list(tmp);
 }
 
-void env_print(char **str)
+void	env_print(char **str)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (str[1])
 	{
@@ -86,7 +87,7 @@ void env_print(char **str)
 	}
 }
 
-void builtin_env(char **str, int MODE)
+void	builtin_env(char **str, int MODE)
 {
 	if (MODE == ENV)
 		env_print(str);

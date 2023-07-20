@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 12:59:23 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/16 13:45:22 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/26 11:34:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_option(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-')
@@ -28,11 +28,11 @@ int	check_option(char *str)
 	return (1);
 }
 
-void builtin_echo(char **str)
+void	builtin_echo(char **str)
 {
 	int	i;
-	int new_line;
-	
+	int	new_line;
+
 	new_line = 1;
 	i = 1;
 	while (str[i] && check_option(str[i]))
