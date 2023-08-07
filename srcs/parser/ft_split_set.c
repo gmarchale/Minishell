@@ -6,77 +6,87 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 17:55:03 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/07 13:14:03 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/07 14:05:50 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	get_arr_len(char *str, char *set)
+bool is_set(char c, char *set)
 {
-	char	*trimmed_str;
-	int		arr_len;
-	int		i;
+	int	i;
 
-	trimmed_str = ft_strtrim(str, set);
-	if (trimmed_str == NULL)
-		return (-1);
-	arr_len = 0;
-	i = 0;
-	if (ft_strchr(set, trimmed_str[i]) == NULL)
-		arr_len++;
-	while (trimmed_str[i])
+	if (!set)
+		return (false);
+	i = -1;
+	while (set[++i])
 	{
-		if (ft_strchr(set, trimmed_str[i]) != NULL)
-			arr_len++;
-		i++;
+		if (c == set[i])
+			return (true);
 	}
-	free(trimmed_str);
-	return (arr_len);
+	return (false);
 }
 
-static size_t	get_element_size(char *str, char *set)
+int	count_words(char *str, char *set)
 {
-	size_t	size;
+	int	i;
+	int	count;
 
-	size = 0;
-	while (*str && ft_strchr(set, *str) == NULL)
+	count = 0;
+	i = -1;
+	while (str[++i])
 	{
-		size++;
-		str++;
+		if ((!is_set(str[i], set) && is_set(str[i + 1], set)) || \
+			(!is_set(str[i], set) && str[i + 1] == '\0'))
+			++count;
 	}
-	return (size);
+	return (count);
+}
+char	*word_to_tab(char *str, char *set)
+{
+	char	*word;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (str[i] && !is_set(str[i], set))
+		++i;
+	word = ft_calloc(i + 1, sizeof(char));
+	if (!word)
+		return (NULL);
+	j = -1;
+	while (++j < i)
+		word[j] = str[j];
+	word[j] = '\0';
+	return (word);
 }
 
 char	**ft_split_set(char *str, char *set)
 {
-	char	**arr;
-	int		arr_len;
-	int		i;
-	int		j;
-
-	if (str == NULL || set == NULL)
+	char	**split;
+	char	**p_split;
+	
+	split = ft_calloc(count_words(str, set) + 1, sizeof(char *));
+	if (!split)
 		return (NULL);
-	arr_len = get_arr_len(str, set);
-	arr = ft_calloc(arr_len + 1, sizeof(*arr));
-	if (arr == NULL)
-		return (NULL);
-	i = 0;
-	while (i < arr_len && *str)
+	p_split = split;
+	while (*str)
 	{
-		while (*str && ft_strchr(set, *str) != NULL)
+		while (is_set(*str, set))
 			str++;
-		arr[i] = ft_calloc(get_element_size(str, set) + 1, sizeof(*arr[i]));
-		if (arr[i] == NULL)
-			return (ft_free_split(arr));
-		j = 0;
-		while (*str && ft_strchr(set, *str) == NULL)
-			arr[i][j++] = *str++;
-		i++;
+		if (!*str)
+			break ;
+		*split = word_to_tab(str, set);
+		if (!*split)
+		{
+			ft_free_split(p_split);
+			return (NULL);
+		}
+		str +=ft_strlen(*split++);
 	}
-	for (int i = 0; arr[i]; ++i)
-	{
-		ft_printf(1, "[%s]\n", arr[i]);
-	}
-	return (arr);
+	*split = NULL;
+
+	for (int i = 0; p_split[i]; ++i)
+		ft_printf(1, "[%s]\n", p_split[i]);
+	return (p_split);
 }

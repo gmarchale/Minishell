@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 14:16:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/07 13:20:48 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/07 14:43:03 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,18 @@ void lexer(char *line)
 
 	first_split = ft_split_set(line, " \t\r\v\f\n");
 	if (!first_split)
-		exit(1);
-	if (syntax_error(first_split))
 	{
-		ft_printf(2, "Syntax error: do not leave open quotes/pipes/redirections\n");
+		ft_printf(1, "woopsie\n");
+		return ;
 	}
+	
+	ft_free_split(first_split);
+		//exit(1);
+	// if (syntax_error(first_split))
+	// {
+	// 	ft_printf(2, "Syntax error: do not leave open quotes/pipes/redirections\n");
+	// }
+	
 	//clear_quotes()
 	// for (int i = 0; first_split[i]; ++i)
 	// {
