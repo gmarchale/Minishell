@@ -1,5 +1,34 @@
 #include "../../includes/minishell.h"
 
+int	check_token(char *line)
+{
+	if (check_token_ends(line))
+		return (1);
+	while (*line)
+	{
+		line += size_quotes(line) - 1;
+		if (is_token(line) && *line == '|')
+		{
+			line += is_token(line);
+			while (*line == ' ')
+				line++;
+			if (is_token(line) && *line == '|')
+				return (error_msg(*line));
+		}
+		else if (is_token(line) && (*line == '<' || *line == '>'))
+		{
+			line += is_token(line);
+			while (*line == ' ')
+				line++;
+			if (is_token(line))
+				return (error_msg(*line));
+			continue ;
+		}
+		line++;
+	}
+	return (0);
+}
+
 static int	get_new_i(int i, char *cmd_line)
 {
 	while (cmd_line[i] && cmd_line[i] != ' ')

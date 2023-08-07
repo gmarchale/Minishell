@@ -6,7 +6,7 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/30 18:23:18 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/07 18:10:54 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	error_msg(char c);
 int	ft_exit_failure(char *str);
 
 /*** LEXER ***/
+int	check_token(char *line);
 int	is_token(char *str);
 int	size_quotes(const char *str);
 t_lexlst	*lexer(char *cmd_line);
@@ -45,5 +46,7 @@ void	lex_lstadd_back(t_lexlst **lst, t_lexlst *new);
 t_lexlst	*lexlst_new(void *content);
 void	lexlst_clear(t_lexlst **lst);
 
+/*** PARSER_UTILS ***/
+int	count_pipes(t_lexlst *lex);
 
 #endif
