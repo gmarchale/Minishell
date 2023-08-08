@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/08/07 18:31:01 by gmarchal         ###   ########.fr        #
+#    Updated: 2023/08/07 19:12:20 by gmarchal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ FILES		=	main.c\
 				parser/mini_utils.c\
 				parser/parser.c\
 				parser/parser_utils.c\
+				parser/parser_lst.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

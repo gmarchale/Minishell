@@ -6,7 +6,10 @@ t_lexlst	*parser(char *cmd_line, int *pipes)
 
 	lexer_lst = NULL;
 	if (checker_quotes(cmd_line, 0, 0))
+	{
+		ft_printf(1, "Error : open quote\n");
 		return (lexer_lst);
+	}
 	if (check_token(cmd_line))
 		return (lexer_lst);
 	lexer_lst = lexer(cmd_line);

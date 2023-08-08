@@ -6,7 +6,7 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/07 18:10:54 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/07 19:12:38 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,8 @@ void	lexlst_clear(t_lexlst **lst);
 
 /*** PARSER_UTILS ***/
 int	count_pipes(t_lexlst *lex);
+
+/*** PARSER_LST ***/
+
 
 #endif

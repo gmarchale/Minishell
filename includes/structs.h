@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/30 18:12:39 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:02:15 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_shell
 	int	exit_value;
 	t_env	*env;
 	t_cmd	*lst;
-	t_lexlst	lexer_lst;
+	t_lexlst	*lexer_lst;
 }	t_shell;
 
 #endif
