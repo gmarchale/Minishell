@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/11 15:09:24 by gmarchal          #+#    #+#             */
+/*   Updated: 2023/08/11 15:09:37 by gmarchal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	check_token(char *line)
@@ -55,7 +67,8 @@ static int	get_new_i(int i, char *cmd_line)
 }
 
 /* 
- * Skips every spaces and uses get_new_i to handle single quotes and double quotes
+ * Skips every spaces and uses get_new_i
+ *  to handle single quotes and double quotes
  */
 
 t_lexlst	*ft_split_lexer(char *cmd_line, t_lexlst *lexer_lst)

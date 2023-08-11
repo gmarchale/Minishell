@@ -6,13 +6,13 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:58:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/20 11:34:24 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/11 15:11:16 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_env *free_node_error(t_env *node, int MODE)
+t_env	*free_node_error(t_env *node, int MODE)
 {
 	if (MODE == KEY)
 		free(node);
