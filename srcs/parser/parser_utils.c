@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 11:52:59 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/27 19:22:33 by gmarchal         ###   ########.fr       */
+/*   Created: 2023/08/07 18:09:51 by gmarchal          #+#    #+#             */
+/*   Updated: 2023/08/07 18:10:06 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+int	count_pipes(t_lexlst *lex)
 {
-	t_list	*new;
+	int	c;
 
-	new = malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+	c = 0;
+	while (lex)
+	{
+		if (ft_strncmp(lex->word, "|", 2) == 0)
+			c++;
+		lex = lex->next;
+	}
+	return (c);
 }

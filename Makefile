@@ -6,7 +6,11 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/06/20 17:22:57 by noloupe          ###   ########.fr        #
+=======
+#    Updated: 2023/08/07 19:12:20 by gmarchal         ###   ########.fr        #
+>>>>>>> lexer2
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +28,13 @@ FILES		=	main.c\
 				builtins/exit.c\
 				env/env.c\
 				libft/str_utils.c\
+				parser/lexer.c\
+				parser/lexer_utils.c\
+				parser/lex_list.c\
+				parser/mini_utils.c\
+				parser/parser.c\
+				parser/parser_utils.c\
+				parser/parser_lst.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
