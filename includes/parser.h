@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/16 14:19:15 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:47:35 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_env	*env_init(char **envp);
 void	free_list(t_env *head);
 void	print_list(t_env *head);
 void	print_env(t_env *env); //temp
+t_env	*create_env(void);
 
 #endif

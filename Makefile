@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/06/20 17:22:57 by noloupe          ###   ########.fr        #
+#    Updated: 2023/08/14 13:46:48 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FILES		=	main.c\
 				builtins/env.c\
 				builtins/exit.c\
 				env/env.c\
+				exec/exec.c\
 				libft/str_utils.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
