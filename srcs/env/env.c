@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-t_env *free_node_error(t_env *node, int MODE)
+t_env	*free_node_error(t_env *node, int MODE)
 {
 	if (MODE == KEY)
 		free(node);

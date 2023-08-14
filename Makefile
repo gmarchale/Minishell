@@ -25,6 +25,13 @@ FILES		=	main.c\
 				env/env.c\
 				exec/exec.c\
 				libft/str_utils.c\
+				parser/lexer.c\
+				parser/lexer_utils.c\
+				parser/lex_list.c\
+				parser/mini_utils.c\
+				parser/parser.c\
+				parser/parser_utils.c\
+				parser/parser_lst.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

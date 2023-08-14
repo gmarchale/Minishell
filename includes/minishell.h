@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/08 15:04:18 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/06/28 22:10:51 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*readline(const char *prompt);
 
 /*** LIBFT ***/
 
-size_t	ft_strlen(const char *s);
-char	*ft_strcpy(char *dest, char *src);
+size_t	ft_strlen(const char *s); //delete
+char	*ft_strcpy(char *dest, char *src); //delete
 
 #endif

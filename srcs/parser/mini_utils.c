@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/10 11:52:59 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/27 19:22:33 by gmarchal         ###   ########.fr       */
+/*   Created: 2023/08/11 15:07:25 by gmarchal          #+#    #+#             */
+/*   Updated: 2023/08/11 15:07:28 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+int	error_msg(char c)
 {
-	t_list	*new;
+	printf("Minishell: Syntax Error near unexpected token `%c'\n", c);
+	return (1);
+}
 
-	new = malloc(sizeof(t_list));
-	if (!new)
-		return (NULL);
-	new->content = content;
-	new->next = NULL;
-	return (new);
+int	ft_exit_failure(char *str)
+{
+	perror(str);
+	exit(EXIT_FAILURE);
 }
