@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:58:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/11 15:11:16 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/08 16:20:15 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,25 @@ void	free_list(t_env *head)
 	}
 }
 
+void	increment_shlvl(t_env *env)
+{
+	t_env	*cpy;
+	int		shlvl;
+	char	*new;
+
+	cpy = env;
+	if (go_to_key(&cpy, "SHLVL"))
+	{
+		shlvl = ft_atoi(cpy->value);
+		++shlvl;
+		new = ft_itoa(shlvl);
+		free(cpy->value);
+		cpy->value = new;
+	}
+	else
+		ft_printf(2, "Error: could not increment SHLVL\n");
+}
+
 t_env	*env_init(char **envp)
 {
 	char	*env;
@@ -118,6 +137,7 @@ t_env	*env_init(char **envp)
 		free(env);
 		i++;
 	}
+	increment_shlvl(head);
 	return (head);
 }
 
@@ -138,6 +158,23 @@ void	print_env(t_env *env) //temp
 		i++;
 	}
 }
+
+t_env	*create_env(void)
+{
+	t_env 	*env;
+	char	*tmp;
+
+	env = NULL;
+	add_node(&env, "OLDPWD", NULL);
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		exit (1);
+	add_node(&env, "PWD", tmp);
+	free(tmp);
+	add_node(&env, "SHLVL", "1");
+	return (env);
+}
+
 /*
 int	main(int argc, char **argv, char **envp)
 {

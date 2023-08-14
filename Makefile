@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/08/11 15:03:45 by gmarchal         ###   ########.fr        #
+#    Updated: 2023/08/14 13:46:48 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FILES		=	main.c\
 				builtins/env.c\
 				builtins/exit.c\
 				env/env.c\
+				exec/exec.c\
 				libft/str_utils.c\
 				parser/lexer.c\
 				parser/lexer_utils.c\

@@ -24,11 +24,15 @@ int	main(int argc, char **argv, char **envp)
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
 		return (1);
-	env = env_init(envp);
+	if (*envp)
+		env = env_init(envp);
+	else
+		env = create_env();
 	if (!env)
 	{
 		printf("env failed\n");
-		return(1);
+		free(shell);
+		exit(1);
 	}
 	shell->env = env;
 	while (1)
