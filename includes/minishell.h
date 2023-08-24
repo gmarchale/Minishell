@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/06/28 22:10:51 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:05:03 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 enum	node_error		{NODE, KEY, VALUE};
 enum	env_printing	{ENV, EXPORT};
+enum	token_types		{e_word, e_pipe, e_redir_in, e_redir_out, e_heredoc, e_append, e_limiter};
 
 /*** GLOBAL ***/
 

@@ -1,44 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   strjoin_free_last.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/21 16:24:24 by noloupe          ###   ########.fr       */
+/*   Created: 2023/08/18 14:49:53 by noloupe           #+#    #+#             */
+/*   Updated: 2023/08/18 14:52:35 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "libft.h"
 
-typedef struct s_env
+char	*strjoin_free_last(char const *s1, char *s2)
 {
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+	char			*str;
+	unsigned int	i;
+	unsigned int	j;
 
-typedef struct s_lexlst
-{
-	char			*word;
-	int				type;
-	struct s_lexlst	*next;
-}	t_lexlst;
-
-typedef struct s_cmd
-{
-	char			**cmd;
-	int				fd_in;
-	int				fd_out;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_shell
-{
-	int			exit_value;
-	t_env		*env;
-}	t_shell;
-
-#endif
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		++i;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		++i;
+		++j;
+	}
+	str[i] = '\0';
+	free(s2);
+	return (str);
+}

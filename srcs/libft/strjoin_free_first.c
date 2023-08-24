@@ -6,13 +6,13 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 16:39:28 by noloupe           #+#    #+#             */
-/*   Updated: 2023/03/30 11:33:02 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/18 14:48:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*strjoin_free1(char *s1, char const *s2)
+char	*strjoin_free_first(char *s1, char const *s2)
 {
 	char			*str;
 	unsigned int	i;

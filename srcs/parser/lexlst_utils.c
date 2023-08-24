@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   lexlst_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/21 16:24:24 by noloupe          ###   ########.fr       */
+/*   Created: 2023/08/14 15:00:05 by noloupe           #+#    #+#             */
+/*   Updated: 2023/08/14 15:05:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../../includes/minishell.h"
 
-typedef struct s_env
+void	free_lexlst(t_lexlst *lexlst)
 {
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct s_lexlst
-{
-	char			*word;
-	int				type;
-	struct s_lexlst	*next;
-}	t_lexlst;
-
-typedef struct s_cmd
-{
-	char			**cmd;
-	int				fd_in;
-	int				fd_out;
-	struct s_cmd	*next;
-}	t_cmd;
-
-typedef struct s_shell
-{
-	int			exit_value;
-	t_env		*env;
-}	t_shell;
-
-#endif
+	if (!lexlst)
+		return ;
+	while (lexlst)
+	{
+		free(lexlst->word);
+		lexlst = lexlst->next;
+	}
+	free(lexlst);
+}
