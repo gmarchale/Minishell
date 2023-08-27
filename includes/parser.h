@@ -6,7 +6,7 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/11 15:06:24 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:30:11 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_env		*env_init(char **envp);
 void		free_list(t_env *head);
 void		print_list(t_env *head);
 void		print_env(t_env *env); //temp
+t_env		*create_env(void);
 
 /*** MINI_UTILS ***/
 int			error_msg(char c);
