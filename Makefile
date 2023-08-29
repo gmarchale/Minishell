@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/08/21 18:25:48 by noloupe          ###   ########.fr        #
+#    Updated: 2023/08/27 16:24:27 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ FILES		=	main.c\
 				parser/parser_utils.c\
 				parser/parser_lst.c\
 				parser/lexlst_utils.c\
-				parser/lexlst_to_cmd.c\
+				parser/lst_to_cmd.c\
 				parser/expander.c\
 				
 
@@ -47,7 +47,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 
 READL		=	-L/usr/local/lib -I/usr/local/include -lreadline -L $(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 
-SANITIZE	=	-fsanitize=address -g
+SANITIZE	=	-fsanitize=address -g3
 
 ### LIB INCLUDES ###
 

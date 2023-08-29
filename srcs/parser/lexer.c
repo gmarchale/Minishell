@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:09:24 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/21 16:21:59 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/25 17:16:40 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@
 // 	}
 // 	return (0);
 // }
+
+bool	is_set(char c, char *charset)
+{
+	int	i;
+
+	i = 0;
+	while (charset[i])
+	{
+		if (c == charset[i])
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 static int	get_new_i(int i, char *cmd_line)
 {

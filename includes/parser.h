@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/21 18:25:34 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/28 14:03:44 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void		parser(t_lexlst *lexlst);
 
 /*** EXPANDER ***/
 
-void	expander(t_lexlst *lexlst);
+void		expander(t_lexlst *lexlst);
+
+/*** IDK ANYMORE ***/
+
+t_cmd		*lst_to_cmd(t_lexlst *lst);
 
 #endif

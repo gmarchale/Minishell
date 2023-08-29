@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:08:17 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/11 15:08:44 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:20:13 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_lexlst	*lexlst_new(void *content)
 	if (!ele)
 		ft_exit_failure("malloc");
 	ele->word = content;
+	ele->type = 0;
 	ele->next = NULL;
 	return (ele);
 }

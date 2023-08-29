@@ -6,17 +6,27 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/24 18:20:00 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/29 15:02:33 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+// void	test_print(t_lexlst *tmp)
+// {
+// 	while(tmp != NULL)
+// 	{
+// 		printf("old: %d	- {%s}\n", tmp->type, tmp->word);
+// 		tmp = tmp->next;
+// 	}
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
-	char	*line;
 	t_lexlst	*str_input;
+	t_cmd		*cmd_lst;
+	t_env		*env;
+	char		*line;
 
 
 	(void)argv;
@@ -54,18 +64,32 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		// lexlst_to_cmd(str_input);
 		/////
+		//test_print(str_input);
+		
 		t_lexlst *tmp = NULL;
 		
 		tmp = str_input;
-		while(str_input != NULL)
+		while(tmp != NULL)
 		{
-			printf("type: %d	- {%s}\n", str_input->type, str_input->word);
-			str_input = str_input->next;
+			printf("old: %d	- {%s}\n", tmp->type, tmp->word);
+			tmp = tmp->next;
 		}
-		str_input = tmp;
+		printf("\n");
 		/////
 		parser(str_input);
 		expander(str_input);
+		/////
+		tmp = NULL;
+		tmp = str_input;
+		while(tmp != NULL)
+		{
+			printf("new: %d	- {%s}\n", tmp->type, tmp->word);
+			tmp = tmp->next;
+		}
+		printf("\n");
+		/////
+		cmd_lst = NULL;
+		cmd_lst = lst_to_cmd(str_input);
 		free_lexlst(str_input);
 	}
 	free_list(env);

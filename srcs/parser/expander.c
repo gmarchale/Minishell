@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:56:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/24 19:41:06 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/28 14:48:50 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	skip_key(char *str)
 	return (i);
 }
 
-void	edit_quote_status(char c, int *sq, int *dq)
+bool	edit_quote_status(char c, int *sq, int *dq)
 {
 	if (c == '\'' && *sq == 0 && *dq == 0)
 		*sq += 1;
@@ -75,6 +75,9 @@ void	edit_quote_status(char c, int *sq, int *dq)
 		*dq += 1;
 	else if (c == '\"' && *dq == 1 && *sq == 0)
 		*dq -= 1;
+	else
+		return (false);
+	return (true);
 }
 
 void	add_value_to_new(char *str, char *new, int *j)
@@ -105,6 +108,33 @@ void	add_value_to_new(char *str, char *new, int *j)
 	free(value);
 }
 
+void	increment_both_int(int *i, int *j)
+{
+	if (!i || !j)
+		return ;
+	*i += 1;
+	*j += 1;
+}
+
+void	copy_and_increment(t_lexlst *tmp, char *new, int *i, int *j)
+{
+	new[*j] = tmp->word[*i];
+	increment_both_int(i, j);
+}
+
+void	copy_key_value(t_lexlst *tmp, char *new, int *i, int *j)
+{
+	if (ft_isalpha(tmp->word[*i + 1]))
+	{
+		add_value_to_new(&tmp->word[*i], new, j);
+		*i += skip_key(&tmp->word[*i]);
+	}
+	else if (ft_isdigit(tmp->word[*i + 1]))
+		*i += 2;
+	else
+		copy_and_increment(tmp, new, i, j);
+}
+
 void	expand_word(t_lexlst *tmp, int count, int *sq, int *dq)
 {
 	char	*new;
@@ -121,27 +151,9 @@ void	expand_word(t_lexlst *tmp, int count, int *sq, int *dq)
 		if (tmp->word[i] == '\'' || tmp->word[i] == '"')
 			edit_quote_status(tmp->word[i], sq, dq);
 		if (tmp->word[i] == '$' && *sq == 0)
-		{
-			if (ft_isalpha(tmp->word[i + 1]))
-			{
-				add_value_to_new(&tmp->word[i], new, &j);
-				i += skip_key(&tmp->word[i]);
-			}
-			else if (ft_isdigit(tmp->word[i + 1]))
-				i += 2;
-			else
-			{
-				new[j] = tmp->word[i];
-				i++;
-				j++;
-			}
-		}
+			copy_key_value(tmp, new, &i, &j);
 		else
-		{
-			new[j] = tmp->word[i];
-			i++;
-			j++;
-		}
+			copy_and_increment(tmp, new, &i, &j);
 		new[j] = '\0';
 	}
 	free(tmp->word);
@@ -155,7 +167,6 @@ void	expand(t_lexlst *tmp, int *sq, int *dq)
 
 	count = 0;
 	i = 0;
-	ft_printf(1, "word = [%s]\n", tmp->word);
 	while (tmp->word[i])
 	{
 		if (tmp->word[i] == '\'' || tmp->word[i] == '"')
@@ -170,19 +181,12 @@ void	expand(t_lexlst *tmp, int *sq, int *dq)
 			else if (ft_isdigit(tmp->word[i + 1]))
 				i += 2;
 			else
-			{
-				count++;
-				i++;
-			}
+				increment_both_int(&i, &count);
 		}
 		else
-		{
-			count++;
-			i++;
-		}
+			increment_both_int(&i, &count);
 	}
 	expand_word(tmp, count, sq, dq);
-	ft_printf(1, "new word: [%s]	-	size: [%d]\n", tmp->word, (int)ft_strlen(tmp->word));
 }
 
 bool	check_expand(char *str)
@@ -199,24 +203,102 @@ bool	check_expand(char *str)
 	return (false);
 }
 
+void	add_lexlst_node(t_lexlst *lexlst, char *str)
+{
+	t_lexlst	*new;
+	t_lexlst	*save;
+
+	save = lexlst->next;
+	new = lexlst_new(ft_strdup(str));
+	if (!new)
+		return ;
+	lexlst->next = new;
+	new->next = save;
+}
+
+void	set_ints_to_zero(int *i, int *j, int *sq, int *dq)
+{
+	*i = 0;
+	*j = 0;
+	*sq = 0;
+	*dq = 0;
+}
+
+void	trim_quotes(t_lexlst *lexlst, int *sq, int *dq)
+{
+	char		*buffer;
+	int			i;
+	int			j;
+
+	while (lexlst)
+	{
+		buffer = ft_calloc(sizeof(char), ft_strlen(lexlst->word));
+		set_ints_to_zero(&i, &j, sq, dq);
+		while (lexlst->word[i])
+		{
+			if (lexlst->word[i] == '\'' || lexlst->word[i] == '"')
+			{
+				while (edit_quote_status(lexlst->word[i], sq, dq))
+					i++;
+			}
+			copy_and_increment(lexlst, buffer, &i, &j);
+		}
+		buffer[j] = '\0';
+		free(lexlst->word);
+		lexlst->word = ft_strdup(buffer);
+		free(buffer);
+		lexlst = lexlst->next;
+	}
+}
+
+void	remove_quotes_and_split_expanded(t_lexlst *lexlst, int *sq, int *dq)
+{
+	t_lexlst	*save;
+	char		*buffer;
+	int			i;
+
+	save = lexlst;
+	while (lexlst)
+	{
+		i = 0;
+		while (lexlst->word[i])
+		{
+			if (lexlst->word[i] == '\'' || lexlst->word[i] == '"')
+				edit_quote_status(lexlst->word[i], sq, dq);
+			else if (is_set(lexlst->word[i], "\011\012\013\014\015\040") && *sq == 0 && *dq == 0)
+			{
+				buffer = ft_substr(lexlst->word, 0, i);
+				add_lexlst_node(lexlst, ft_strdup(&lexlst->word[i + 1]));
+				free(lexlst->word);
+				lexlst->word = buffer;
+				break ;
+			}
+			i++;
+		}
+		lexlst = lexlst->next;
+	}
+	trim_quotes(save, sq, dq);
+}
+
 void	expander(t_lexlst *lexlst)
 {
-	t_lexlst	*tmp;
+	t_lexlst	*save;
 	int			sq;
 	int			dq;
 
 	if (!lexlst)
 		return ;
 	sq = 0;
-	dq = 0; //check if used
-	tmp = lexlst;
-	while (tmp)
+	dq = 0;
+	save = lexlst;
+	while (lexlst)
 	{
-		if (tmp->type == e_word)
+		if (lexlst->type == e_word)
 		{
-			if (check_expand(tmp->word))
-				expand(tmp, &sq, &dq);
+			if (check_expand(lexlst->word))
+				expand(lexlst, &sq, &dq);
 		}
-		tmp = tmp->next;
+		lexlst = lexlst->next;
 	}
+	remove_quotes_and_split_expanded(save, &sq, &dq);
 }
