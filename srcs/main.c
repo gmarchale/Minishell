@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/29 21:18:54 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:45:51 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 #include <fcntl.h>
 
-/*
+void	signal_handler_ctrl_c(int sig)
+{
+	(void)sig;
+	
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 	char	*line;
 	t_lexlst	*str_input;
 
+	signal(SIGINT, signal_handler_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
 	(void)argc;
 	(void)argv;
 	str_input = NULL;
@@ -57,8 +69,8 @@ int	main(int argc, char **argv, char **envp)
 	free_list(env);
 	return (0);
 }
-*/
 
+/*
 int	create_heredoc(char *lim) //(t_lexlst lim)
 {
 	int	fd;
@@ -120,3 +132,4 @@ int	main(int argc, char **argv, char **envp)
 	free_list(env);
 	return (0);
 }
+*/
