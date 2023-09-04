@@ -6,7 +6,7 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/30 20:53:03 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:39:52 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "parser.h"
 # include "exec.h"
 # include <signal.h>
+# include <fcntl.h>
 
 /*** ENUMS ***/
 
@@ -49,5 +50,7 @@ char	*ft_strcpy(char *dest, char *src); //delete
 /*** Signals ***/
 
 void    rl_replace_line(char *s, int n); //necessaire sinon le signal fonctionne pas (ask bruno)
+void	signal_handler_ctrl_c(int sig);
+void	signal_handler(int input);
 
 #endif

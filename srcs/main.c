@@ -6,24 +6,11 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/30 16:45:51 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:42:09 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-#include <fcntl.h>
-
-void	signal_handler_ctrl_c(int sig)
-{
-	(void)sig;
-	
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,10 +18,9 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_lexlst	*str_input;
 
-	signal(SIGINT, signal_handler_ctrl_c);
-	signal(SIGQUIT, SIG_IGN);
 	(void)argc;
 	(void)argv;
+	signal_handler(0);
 	str_input = NULL;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
