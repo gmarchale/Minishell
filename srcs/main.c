@@ -6,12 +6,12 @@
 /*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/04 15:42:09 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:43:07 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
@@ -55,33 +55,8 @@ int	main(int argc, char **argv, char **envp)
 	free_list(env);
 	return (0);
 }
+*/
 
-/*
-int	create_heredoc(char *lim) //(t_lexlst lim)
-{
-	int	fd;
-	size_t size;
-	char *line;
-
-	fd = open("heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644); //change path
-	if (!fd)
-		return (1);
-	while (1)
-	{
-		line = readline("heredoc> ");
-		size = ft_strlen(lim);
-		if (ft_strlen(line) > size)
-			size = ft_strlen(line);
-		if (ft_strncmp(line, lim, size)) //!= lim->word)
-			ft_printf(fd, "%s\n", line);
-		else
-		{
-			ft_printf(fd, "Found delimiter\n"); // a delete
-			return (fd);
-		}
-	}
-	return (fd);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -118,4 +93,4 @@ int	main(int argc, char **argv, char **envp)
 	free_list(env);
 	return (0);
 }
-*/
+

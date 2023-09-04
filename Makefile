@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/04 15:41:23 by gmarchal         ###   ########.fr        #
+#    Updated: 2023/09/04 17:43:07 by gmarchal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ FILES		=	main.c\
 				parser/parser.c\
 				parser/parser_utils.c\
 				parser/parser_lst.c\
-				signal.c
+				signal.c\
+				heredoc.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 
