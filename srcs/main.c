@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/05 19:19:56 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/06 18:12:33 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	shell->env = env;
-	shell->pids = NULL;
 	while (1)
 	{
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
@@ -96,13 +95,16 @@ int	main(int argc, char **argv, char **envp)
 			str_input = lexer(line);
 		}
 		else
+		{
+			free(line);
 			continue ;
+		}
 		free(line);
 		// if (!str_input)
 		// 	return(shell->exit_value);
 		// lexlst_to_cmd(str_input);
 		/////
-		t_lexlst *tmp = NULL;
+		// t_lexlst *tmp = NULL;
 		
 		// tmp = str_input;
 		// while(tmp != NULL)
@@ -115,14 +117,14 @@ int	main(int argc, char **argv, char **envp)
 		parser(str_input);
 		expander(str_input);
 		/////
-		tmp = NULL;
-		tmp = str_input;
-		while(tmp != NULL)
-		{
-			printf("new: %d	- {%s}\n", tmp->type, tmp->word);
-			tmp = tmp->next;
-		}
-		printf("\n");
+		// tmp = NULL;
+		// tmp = str_input;
+		// while(tmp != NULL)
+		// {
+		// 	printf("new: %d	- {%s}\n", tmp->type, tmp->word);
+		// 	tmp = tmp->next;
+		// }
+		// printf("\n");
 		/////
 		cmdlst = lst_to_cmd(str_input);
 		free_lexlst(str_input);
