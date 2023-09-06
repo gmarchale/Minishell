@@ -23,6 +23,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 # include "structs.h"
 # include "parser.h"
 # include "exec.h"
@@ -33,6 +34,7 @@
 
 enum	node_error		{NODE, KEY, VALUE};
 enum	env_printing	{ENV, EXPORT};
+enum	token_types		{e_word, e_pipe, e_redir_in, e_redir_out, e_heredoc, e_append, e_limiter};
 
 /*** GLOBAL ***/
 

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   strjoin_free_both.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 18:09:26 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/01 18:11:32 by noloupe          ###   ########.fr       */
+/*   Created: 2023/08/18 14:50:56 by noloupe           #+#    #+#             */
+/*   Updated: 2023/08/18 14:52:42 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	*ft_free_split(char **split)
+char	*strjoin_free_both(char *s1, char *s2)
 {
-	int	i;
+	char			*str;
+	unsigned int	i;
+	unsigned int	j;
 
-	i = 0;
-	while (split && split[i])
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		str[i] = s1[i];
+	j = 0;
+	while (s2[j])
 	{
-		free(split[i]);
-		i++;
+		str[i] = s2[j];
+		++i;
+		++j;
 	}
-	free(split);
-	return (NULL);
+	str[i] = '\0';
+	free(s1);
+	free(s2);
+	return (str);
 }

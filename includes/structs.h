@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/08 13:02:15 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/05 14:41:12 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,32 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_redir
-{
-	char			*key;
-	int				mode;
-	struct s_redir	*next;
-}			t_redir;
-
 typedef struct s_lexlst
 {
 	char			*word;
+	int				type;
 	struct s_lexlst	*next;
 }	t_lexlst;
 
 typedef struct s_cmd
 {
 	char			**cmd;
-	int				(*builtin)(struct s_cmd *);
-	char			*rd_in;
-	char			*rd_out;
-	//t_env			*head; //deja dans la globale
+	int				fd_in;
+	int				fd_out;
 	struct s_cmd	*next;
-	// int				exit_status; // dans la globale aussi
-	int				index;
-	char			*cwd;
 }	t_cmd;
+
+typedef struct s_pids
+{
+	int				pid;
+	struct s_pids	*next;
+}	t_pids;
 
 typedef struct s_shell
 {
-	int	exit_value;
-	t_env	*env;
-	t_cmd	*lst;
-	t_lexlst	*lexer_lst;
+	int			exit_value;
+	t_env		*env;
+	t_pids		*pids;
 }	t_shell;
 
 #endif

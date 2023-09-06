@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:44 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/11 15:10:47 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:13:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@
  *	Return 0 if OK
  *	return 1 if KO
  */
-int	checker_quotes(char *line, int s, int d)
+int	checker_quotes(char *line)
 {
+	int	s;
+	int	d;
+	
+	s = 0;
+	d = 0;
 	while (*line)
 	{
 		if (*line == '\'' && s == 0 && d == 0)
@@ -72,23 +77,23 @@ int	is_token(char *str)
 	return (0);
 }
 
-int	check_token_ends(char *line)
-{
-	while (*line == ' ')
-		line++;
-	if (!*line)
-		return (1);
-	if (*line == '|')
-	{
-		return (error_msg(*line));
-	}
-	line += ft_strlen(line) - 1;
-	while (*line == ' ')
-		line--;
-	if (is_token(line))
-		return (error_msg(*line));
-	return (0);
-}
+// int	check_token_ends(char *line)
+// {
+// 	while (*line == ' ')
+// 		line++;
+// 	if (!*line)
+// 		return (1);
+// 	if (*line == '|')
+// 	{
+// 		return (error_msg(*line));
+// 	}
+// 	line += ft_strlen(line) - 1;
+// 	while (*line == ' ')
+// 		line--;
+// 	if (is_token(line))
+// 		return (error_msg(*line));
+// 	return (0);
+// }
 
 int	skip_quotes(char *line, int *dq)
 {

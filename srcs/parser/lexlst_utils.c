@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   lexlst_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 18:09:51 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/07 18:10:06 by gmarchal         ###   ########.fr       */
+/*   Created: 2023/08/14 15:00:05 by noloupe           #+#    #+#             */
+/*   Updated: 2023/08/14 15:05:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	count_pipes(t_lexlst *lex)
+void	free_lexlst(t_lexlst *lexlst)
 {
-	int	c;
-
-	c = 0;
-	while (lex)
+	if (!lexlst)
+		return ;
+	while (lexlst)
 	{
-		if (ft_strncmp(lex->word, "|", 2) == 0)
-			c++;
-		lex = lex->next;
+		free(lexlst->word);
+		lexlst = lexlst->next;
 	}
-	return (c);
+	free(lexlst);
 }

@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/04 17:43:07 by gmarchal         ###   ########.fr        #
+#    Updated: 2023/09/04 13:02:15 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,9 @@ FILES		=	main.c\
 				parser/lex_list.c\
 				parser/mini_utils.c\
 				parser/parser.c\
-				parser/parser_utils.c\
-				parser/parser_lst.c\
+				parser/lexlst_utils.c\
+				parser/lst_to_cmd.c\
+				parser/expander.c\
 				signal.c\
 				heredoc.c\
 
@@ -45,7 +46,7 @@ CFLAGS		=	-Wall -Werror -Wextra
 
 READL		=	-L/usr/local/lib -I/usr/local/include -lreadline -L $(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 
-SANITIZE	=	-fsanitize=address -g
+SANITIZE	=	-fsanitize=address -g3
 
 ### LIB INCLUDES ###
 
@@ -61,7 +62,7 @@ DIRS		=	$(PRINTF) $(LIBFT)
 
 $(NAME):		$(OBJS)
 				@echo "Making libft..."
-				@make bonus -C $(LIBFT_DIR)
+				@make -C $(LIBFT_DIR)
 				@echo "Libft done."
 				@echo "Making printf..."
 				@make -C $(PRINTF_DIR)

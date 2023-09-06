@@ -5,29 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 14:16:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/07 14:43:03 by noloupe          ###   ########.fr       */
+/*   Created: 2023/08/21 15:31:06 by noloupe           #+#    #+#             */
+/*   Updated: 2023/08/31 15:46:07 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_lexlst	*parser(char *cmd_line, int *pipes)
+int	check_token_error(t_lexlst *tmp)
 {
-	t_lexlst	*lexer_lst;
-
-	lexer_lst = NULL;
-	if (checker_quotes(cmd_line, 0, 0))
+	if (tmp->type == e_redir_in || tmp->type == e_redir_out || \
+		tmp->type == e_heredoc || tmp->type == e_append)
 	{
-		ft_printf(1, "Error : open quote\n");
-		return (lexer_lst);
+		if (!tmp->next || tmp->next->type == e_redir_in || \
+			tmp->next->type == e_redir_out || tmp->next->type == e_heredoc || \
+			tmp->next->type == e_append || tmp->next->type == e_pipe)
+		{
+			ft_printf(2, "minishell: syntax error\n");
+			return (1);
+		}
 	}
-	if (check_token(cmd_line))
-		return (lexer_lst);
-	lexer_lst = lexer(cmd_line);
-	if (!lexer_lst)
-		exit(EXIT_FAILURE);
-	*pipes = count_pipes(lexer_lst); //creer une variable pipes dans main
-	//parse_list(); //creer fonction qui prend la lex list et la met dans une liste chainee t_cmd
-	return (lexer_lst);
+	else if (tmp->type == e_pipe)
+	{
+		if (!tmp->next || tmp->next->type == e_pipe)
+		{
+			ft_printf(2, "minishell: syntax error\n");
+			return (1);
+		}
+	}
+	return (0);
+}
+
+void	parser(t_lexlst *lexlst)
+{
+	t_lexlst	*tmp;
+
+	if (!lexlst)
+		return ;
+	tmp = lexlst;
+	if (tmp->type == e_pipe)
+	{
+		ft_printf(2, "minishell: syntax error\n");
+		return ;
+	}
+	while (tmp)
+	{
+		if (check_token_error(tmp))
+			return ;
+		tmp = tmp->next;
+	}
+	return ;
 }

@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/03 11:30:11 by noloupe           #+#    #+#              #
-#    Updated: 2023/03/24 16:40:05 by noloupe          ###   ########.fr        #
+#    Updated: 2023/08/18 14:50:40 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ SRCS			=	ft_isalpha.c\
 					ft_putstr_fd.c\
 					ft_putendl_fd.c\
 					ft_putnbr_fd.c\
-					strjoin_free1.c\
+					strjoin_free_first.c\
+					strjoin_free_last.c\
+					strjoin_free_both.c\
 
 SRCS_BONUS		=	ft_lstnew_bonus.c\
 					ft_lstadd_front_bonus.c\

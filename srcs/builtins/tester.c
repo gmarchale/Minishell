@@ -6,11 +6,26 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:37:54 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/14 13:48:42 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/14 15:11:00 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_split(char **split)
+{
+	int	i;
+	
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
 
 void	builtins_tester(char *line)
 {
@@ -37,4 +52,5 @@ void	builtins_tester(char *line)
 		builtin_exit(s_line);
 	else
 		ft_printf(1, "minishell: %s: command not found\n", s_line[0]);
+	
 }
