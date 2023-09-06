@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/26 11:37:08 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/05 16:56:48 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	export_print(void)
 			ft_printf(1, "declare -x %s\n", tmp->key);
 		tmp = tmp->next;
 	}
-	free_list(tmp);
+	free_env_list(tmp);
 }
 
 void	env_print(char **str)

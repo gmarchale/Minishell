@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 15:31:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/21 18:28:59 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:46:07 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void	parser(t_lexlst *lexlst)
 			return ;
 		tmp = tmp->next;
 	}
+	return ;
 }

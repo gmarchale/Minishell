@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 16:55:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/29 15:02:19 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/04 18:26:01 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,45 +42,95 @@ int	get_arr_size(t_lexlst *lexlst)
 	return (count);
 }
 
+int	get_fd(char *str, int type)
+{
+	int	fd;
+
+	fd = 0;
+	if (type == e_redir_in)
+		fd = open(str, O_RDONLY);
+	else if (type == e_redir_out)
+		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == e_append)
+		fd = open(str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	return (fd);
+}
+
+int make_arr_and_get_fds(t_cmd **cmd, t_lexlst **lexlst, int *i, int *stop)
+{
+	if ((*lexlst)->type == e_word)
+	{
+		(*cmd)->cmd[*i] = ft_strdup((*lexlst)->word);
+		*i += 1;
+	}
+	else if ((*lexlst)->type == e_pipe)
+	{
+		(*cmd)->cmd[*i] = NULL;
+		*stop = 0;
+		(*cmd)->next = cmd_new_node();
+		*cmd = (*cmd)->next;
+		return (1);
+	}
+	else if ((*lexlst)->type == e_redir_in && *stop == 0)
+	{
+		if ((*cmd)->fd_in != 0)
+			close((*cmd)->fd_in);
+		(*cmd)->fd_in = get_fd((*lexlst)->next->word, (*lexlst)->type);
+		*lexlst = (*lexlst)->next;
+	}
+	else if ((*lexlst)->type == e_redir_out && *stop == 0)
+	{
+		if ((*cmd)->fd_out != 1)
+			close((*cmd)->fd_out);
+		(*cmd)->fd_out = get_fd((*lexlst)->next->word, (*lexlst)->type);
+		*lexlst = (*lexlst)->next;
+	}
+	else if ((*lexlst)->type == e_append && *stop == 0)
+	{
+		if ((*cmd)->fd_out != 1)
+			close((*cmd)->fd_out);
+		(*cmd)->fd_out = get_fd((*lexlst)->next->word, (*lexlst)->type);
+		*lexlst = (*lexlst)->next;
+	}
+	// else if (lexlst->type == e_heredoc)
+	// {
+	// 	// w8
+	// }
+	if ((*cmd)->fd_in == -1 || (*cmd)->fd_out == -1)
+	{
+		(*cmd)->fd_in = -2;
+		(*cmd)->fd_out = -2;
+		*stop = 1;
+		perror("fd");
+	}
+	*lexlst = (*lexlst)->next;
+	return (0);
+}
+
 t_cmd	*lst_to_cmd(t_lexlst *lexlst)
 {
 	t_cmd		*cmd;
 	t_cmd		*save;
-	char		**arr;
-	int			size;
+	int			stop;
 	int			i;
 	
 	cmd = cmd_new_node();
 	save = cmd;
+	stop = 0;
 	while (lexlst)
 	{
-		size = get_arr_size(lexlst);
-		ft_printf(1, "size : %d + 1\n", size);
-		arr = malloc(sizeof(char *) * size + 1);
-		if (!arr)
+		cmd->cmd = malloc(sizeof(char *) * get_arr_size(lexlst) + 1);
+		if (cmd->cmd == NULL)
 			exit(shell->exit_value);
 		i = 0;
 		while (lexlst)
 		{
-			if (lexlst->type == e_word)
-			{
-				arr[i] = ft_strdup(lexlst->word);
-				ft_printf(1, "arr[%d] = [%s]\n", i, arr[i]);
-				i++;
-			}
-			else if (lexlst->type == e_pipe)
-			{
-				arr[i] = NULL;
-				cmd->cmd = arr;
-				cmd->next = cmd_new_node();
-				cmd = cmd->next;
+			if (make_arr_and_get_fds(&cmd, &lexlst, &i, &stop))
 				break ;
-			}
-			lexlst = lexlst->next;	
 		}
 		if (lexlst)
 			lexlst = lexlst->next;
 	}
-	arr[i] = NULL;
+	cmd->cmd[i] = NULL;
 	return (save);
 }

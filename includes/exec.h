@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:17:51 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/07/24 14:37:52 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/05 16:48:38 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int		key_check(char *key, char *word);
 void	execution(t_cmd *cmd_l);
 int		is_solo_builtin(t_cmd *cmd_l);
 int		is_builtin(char	*cmd);
+
+void	free_tab(char **tab);
 
 #endif

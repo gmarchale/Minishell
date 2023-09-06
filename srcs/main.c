@@ -6,25 +6,58 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/29 15:02:33 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/05 19:19:56 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void	test_print(t_lexlst *tmp)
-// {
-// 	while(tmp != NULL)
-// 	{
-// 		printf("old: %d	- {%s}\n", tmp->type, tmp->word);
-// 		tmp = tmp->next;
-// 	}
-// }
+void print_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		ft_printf(1, "[%d]: %s\n", i, arr[i]);
+		i++;
+	}
+}
+
+void print_cmds(t_cmd *cmdlst)
+{
+	int	i;
+
+	i = 1;
+	while (cmdlst)
+	{
+		ft_printf(1, "\n");
+		ft_printf(1, "--- node #%d ---\n", i);
+		print_arr(cmdlst->cmd);
+		ft_printf(1, "fd in : %d\n", cmdlst->fd_in);
+		ft_printf(1, "fd out : %d\n", cmdlst->fd_out);
+		cmdlst = cmdlst->next;
+		i++;
+	}
+}
+
+void	free_cmdlst(t_cmd *cmdlst)
+{
+	t_cmd	*previous;
+
+	while (cmdlst)
+	{
+		free_tab(cmdlst->cmd);
+		previous = cmdlst;
+		cmdlst = cmdlst->next;
+		free(previous);
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_lexlst	*str_input;
-	t_cmd		*cmd_lst;
+	t_cmd		*cmdlst;
 	t_env		*env;
 	char		*line;
 
@@ -50,31 +83,33 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	shell->env = env;
+	shell->pids = NULL;
 	while (1)
 	{
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
 			return (0); // free plus tard
 		if (line[0] != '\0')
+		{
 			add_history(line);
-		//builtins_tester(line);
-		str_input = lexer(line);
+			str_input = lexer(line);
+		}
+		else
+			continue ;
+		free(line);
 		// if (!str_input)
 		// 	return(shell->exit_value);
-		free(line);
 		// lexlst_to_cmd(str_input);
 		/////
-		//test_print(str_input);
-		
 		t_lexlst *tmp = NULL;
 		
-		tmp = str_input;
-		while(tmp != NULL)
-		{
-			printf("old: %d	- {%s}\n", tmp->type, tmp->word);
-			tmp = tmp->next;
-		}
-		printf("\n");
+		// tmp = str_input;
+		// while(tmp != NULL)
+		// {
+		// 	printf("old: %d	- {%s}\n", tmp->type, tmp->word);
+		// 	tmp = tmp->next;
+		// }
+		// printf("\n");
 		/////
 		parser(str_input);
 		expander(str_input);
@@ -88,11 +123,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		printf("\n");
 		/////
-		cmd_lst = NULL;
-		cmd_lst = lst_to_cmd(str_input);
+		cmdlst = lst_to_cmd(str_input);
 		free_lexlst(str_input);
+		// print_cmds(cmdlst);
+		execution(cmdlst);
+		free_cmdlst(cmdlst);
 	}
-	free_list(env);
+	free_env_list(env);
 	free(shell);
 	return (0);
 }

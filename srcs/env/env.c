@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:58:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/08 16:20:15 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/05 16:56:54 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	print_list(t_env *head)
 	}
 }
 
-void	free_list(t_env *head)
+void	free_env_list(t_env *head)
 {
 	t_env	*temp;
 
@@ -184,7 +184,7 @@ int	main(int argc, char **argv, char **envp)
 	linked_list = env_init(envp);
 	print_env(linked_list);
     print_list(linked_list);
-	free_list(linked_list);
+	free_env_list(linked_list);
 	return (0);
 }
 */
