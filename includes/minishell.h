@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/08/31 13:40:52 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/04 17:43:49 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include "structs.h"
 # include "parser.h"
 # include "exec.h"
+# include <signal.h>
+# include <fcntl.h>
 
 /*** ENUMS ***/
 
@@ -46,5 +48,13 @@ char	*readline(const char *prompt);
 
 size_t	ft_strlen(const char *s); //delete
 char	*ft_strcpy(char *dest, char *src); //delete
+
+/*** Signals ***/
+
+void    rl_replace_line(char *s, int n); //necessaire sinon le signal fonctionne pas (ask bruno)
+void	signal_handler(int input);
+
+/*** Heredoc ***/
+int	create_heredoc(char *lim); //(t_lexlst lim)
 
 #endif

@@ -22,6 +22,7 @@ t_env		*env_init(char **envp);
 void		free_env_list(t_env *head);
 void		print_list(t_env *head);
 void		print_env(t_env *env); //temp
+t_env		*create_env(void);
 
 /*** MINI_UTILS ***/
 int			error_msg(char c);
