@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/08 14:18:54 by noloupe          ###   ########.fr        #
+#    Updated: 2023/09/08 19:31:58 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ $(NAME):		$(OBJS)
 all:			$(NAME)
 
 sanitize:		fclean
+				@echo "Compiling with sanitize..."
 				@make SANITIZE=1
 
 clean:
