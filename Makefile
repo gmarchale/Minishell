@@ -33,7 +33,8 @@ FILES		=	main.c\
 				parser/lexlst_utils.c\
 				parser/lst_to_cmd.c\
 				parser/expander.c\
-				
+				signal.c\
+				heredoc.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

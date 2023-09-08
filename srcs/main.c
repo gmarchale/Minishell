@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
 /*   Updated: 2023/09/06 18:11:46 by noloupe          ###   ########.fr       */
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf(1, "Do not provide arguments\n");
 		return (1);
 	}
+	signal_handler(0);
 	str_input = NULL;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
