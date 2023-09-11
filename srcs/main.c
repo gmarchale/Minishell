@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/08 16:26:50 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/11 16:21:38 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,11 @@ int	main(int argc, char **argv, char **envp)
 		// }
 		// printf("\n");
 		/////
-		parser(str_input);
+		if (parser(str_input))
+		{
+			lexlst_clear(&str_input);
+			continue ;
+		}
 		expander(str_input);
 		/////
 		// tmp = NULL;

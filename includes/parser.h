@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/05 16:55:06 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/10 19:45:13 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			count_pipes(t_lexlst *lex);
 
 // void	lexlst_to_cmd(t_lexlst *lexlst);
 bool		is_set(char c, char *charset);
-void		parser(t_lexlst *lexlst);
+int 		parser(t_lexlst *lexlst);
 
 /*** EXPANDER ***/
 

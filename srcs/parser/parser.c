@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 15:31:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/31 15:46:07 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/10 19:45:31 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ int	check_token_error(t_lexlst *tmp)
 	return (0);
 }
 
-void	parser(t_lexlst *lexlst)
+int	parser(t_lexlst *lexlst)
 {
 	t_lexlst	*tmp;
 
 	if (!lexlst)
-		return ;
+		return (1);
 	tmp = lexlst;
 	if (tmp->type == e_pipe)
 	{
 		ft_printf(2, "minishell: syntax error\n");
-		return ;
+		return (1);
 	}
 	while (tmp)
 	{
 		if (check_token_error(tmp))
-			return ;
+			return (1);
 		tmp = tmp->next;
 	}
-	return ;
+	return (0);
 }
