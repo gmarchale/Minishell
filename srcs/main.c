@@ -102,7 +102,10 @@ int	main(int argc, char **argv, char **envp)
 			str_input = lexer(line);
 		}
 		else
+		{
+			free(line);
 			continue ;
+		}
 		free(line);
 		// if (!str_input)
 		// 	return(shell->exit_value);
