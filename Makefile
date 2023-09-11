@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/04 13:02:15 by noloupe          ###   ########.fr        #
+#    Updated: 2023/09/08 19:31:58 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,14 @@ CC			=	gcc
 
 CFLAGS		=	-Wall -Werror -Wextra
 
+SANITIZE	=	0
+
 READL		=	-L/usr/local/lib -I/usr/local/include -lreadline -L $(shell brew --prefix readline)/lib -I $(shell brew --prefix readline)/include
 
-SANITIZE	=	-fsanitize=address -g3
+ifeq ($(SANITIZE), 1)
+	CFLAGS	+= -fsanitize=address -g3
+endif
+
 
 ### LIB INCLUDES ###
 
@@ -73,19 +78,12 @@ $(NAME):		$(OBJS)
 
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-sanitize:		$(OBJS)
-				@echo "Making libft..."
-				@make bonus -C $(LIBFT_DIR)
-				@echo "Libft done."
-				@echo "Making printf..."
-				@make -C $(PRINTF_DIR)
-				@echo "Printf done."
-				@echo "Compiling with sanitize..."
-				@$(CC) $(CFLAGS) $(SANITIZE) $(OBJS) $(DIRS) $(READL) -o $(NAME)
-				@echo "Done."
-
+				
 all:			$(NAME)
+
+sanitize:		fclean
+				@echo "Compiling with sanitize..."
+				@make SANITIZE=1
 
 clean:
 				@echo "Cleaning..."

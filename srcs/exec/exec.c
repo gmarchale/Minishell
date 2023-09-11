@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/05 18:35:36 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/08 20:18:02 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**env_to_list(void)
 	char	**env;
 	int		i;
 
-	env = malloc(sizeof(char *) * get_env_size() + 1);
+	env = malloc(sizeof(char *) * (get_env_size() + 1));
 	if (!env)
 		exit(shell->exit_value);
 	save = shell->env;
@@ -158,57 +158,71 @@ char	*get_path(char *cmd, char **envp)
 	char	**path_tab;
 
 	i = 0;
-	while (envp[i] && ft_memcmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	path_tab = ft_split(envp[i], ':');
-	if (!path_tab)
-		return (NULL);
-	i = -1;
-	while (path_tab[++i])
+	if (envp[i])
 	{
-		path = ft_strjoin(path_tab[i], "/");
-		path = strjoin_free_first(path, cmd);
-		if (!access(path, F_OK))
-		{
-			free_tab(path_tab);
-			return (path);
+		path_tab = ft_split(envp[i], ':');
+		if (!path_tab)
+		{			
+			ft_printf(STDERR_FILENO, "minishell: error in path split\n");
+			exit(EXIT_FAILURE);
 		}
-		free(path);
+		i = -1;
+		while (path_tab[++i])
+		{
+			path = ft_strjoin(path_tab[i], "/");
+			path = strjoin_free_first(path, cmd);
+			if (!access(path, F_OK))
+			{
+				free_tab(path_tab);
+				return (path);
+			}
+			free(path);
+		}
+		free_tab(path_tab);
 	}
-	free_tab(path_tab);
-	ft_printf(STDERR_FILENO, "command not found: %s\n", cmd);
-	exit(EXIT_FAILURE);
+	return (NULL);
 }
 
 void	exec_command(t_cmd *cmdlst, char **env)
 {
 	char	*path;
 	
-	if (!access(cmdlst->cmd[0], F_OK))
-	{
-		if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
-			perror("execve");	
-	}
 	path = get_path(cmdlst->cmd[0], env);
 	if (!path)
 	{
-		ft_printf(STDERR_FILENO, "minishell: error in path split\n");
-		return ;
+		if (!access(cmdlst->cmd[0], F_OK))
+		{
+			if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
+			{
+				perror("execve");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", cmdlst->cmd[0]);
+			exit(EXIT_FAILURE);
+		}
 	}
-	if (execve(path, cmdlst->cmd, env))
+	else if (execve(path, cmdlst->cmd, env))
+	{
 		perror("execve");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	make_child(t_cmd *cmdlst, char **env, t_pids **pids)
 {
 	int	pid;
-	// int	fd[2];
+	int	fd[2];
 
-	// if (pipe(fd) == -1)
-	// {
-	// 	perror("pipe");
-	// 	return ;
-	// }
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -217,15 +231,20 @@ void	make_child(t_cmd *cmdlst, char **env, t_pids **pids)
 	}
 	if (pid == 0)
 	{
-		// close(fd[0]);
-		// close(fd[1]);
+		// if redir -- else
+		dup2(STDIN_FILENO, fd[0]);
+		dup2(STDOUT_FILENO, fd[1]);
+		dup2(cmdlst->fd_in, STDIN_FILENO);
+		dup2(cmdlst->fd_out, STDOUT_FILENO);
 		exec_command(cmdlst, env);
+		close(fd[0]);
+		close(fd[1]);
 	}
 	else
 	{
 		add_pid_to_list(pids, pid);
-		// close(fd[0]);
-		// close(fd[1]);
+		close(fd[0]);
+		close(fd[1]);
 	}
 }
 
@@ -236,8 +255,10 @@ void	execute(t_cmd *cmdlst, char **env)
 	pids = NULL;
 	while (cmdlst)
 	{
+		// save_base_fds();
 		make_child(cmdlst, env, &pids);
 		cmdlst = cmdlst->next;
+		// restore_base_fds();
 	}
 	//sleep(1);
 	wait_pids(pids);
@@ -246,14 +267,8 @@ void	execute(t_cmd *cmdlst, char **env)
 
 void	print_env_arr(char **arr) //tmp
 {
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		ft_printf(1, "%s\n", arr[i]);
-		i++;
-	}
+	while (*arr)
+		ft_printf(1, "%s\n", *arr++);
 }
 
 void	execution(t_cmd *cmdlst)

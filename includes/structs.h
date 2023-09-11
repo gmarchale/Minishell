@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:05:12 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/05 14:41:12 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/06 18:11:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_shell
 {
 	int			exit_value;
 	t_env		*env;
-	t_pids		*pids;
 }	t_shell;
 
 #endif
