@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/08 19:25:16 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/08 20:18:02 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,47 +158,55 @@ char	*get_path(char *cmd, char **envp)
 	char	**path_tab;
 
 	i = 0;
-	while (envp[i] && ft_memcmp(envp[i], "PATH=", 5))
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	path_tab = ft_split(envp[i], ':');
-	if (!path_tab)
-		return (NULL);
-	i = -1;
-	while (path_tab[++i])
+	if (envp[i])
 	{
-		path = ft_strjoin(path_tab[i], "/");
-		path = strjoin_free_first(path, cmd);
-		if (!access(path, F_OK))
-		{
-			free_tab(path_tab);
-			return (path);
+		path_tab = ft_split(envp[i], ':');
+		if (!path_tab)
+		{			
+			ft_printf(STDERR_FILENO, "minishell: error in path split\n");
+			exit(EXIT_FAILURE);
 		}
-		free(path);
+		i = -1;
+		while (path_tab[++i])
+		{
+			path = ft_strjoin(path_tab[i], "/");
+			path = strjoin_free_first(path, cmd);
+			if (!access(path, F_OK))
+			{
+				free_tab(path_tab);
+				return (path);
+			}
+			free(path);
+		}
+		free_tab(path_tab);
 	}
-	free_tab(path_tab);
-	ft_printf(STDERR_FILENO, "command not found: %s\n", cmd);
-	exit(EXIT_FAILURE);
+	return (NULL);
 }
 
 void	exec_command(t_cmd *cmdlst, char **env)
 {
 	char	*path;
 	
-	if (!access(cmdlst->cmd[0], F_OK))
-	{
-		if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
-		{
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
-	}
 	path = get_path(cmdlst->cmd[0], env);
 	if (!path)
 	{
-		ft_printf(STDERR_FILENO, "minishell: error in path split\n");
-		exit(EXIT_FAILURE);
+		if (!access(cmdlst->cmd[0], F_OK))
+		{
+			if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
+			{
+				perror("execve");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", cmdlst->cmd[0]);
+			exit(EXIT_FAILURE);
+		}
 	}
-	if (execve(path, cmdlst->cmd, env))
+	else if (execve(path, cmdlst->cmd, env))
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
