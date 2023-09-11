@@ -90,6 +90,13 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
 			return (0); // free plus tard
+		if (!ft_strncmp(line, "echo $?", 8))
+		{
+			add_history(line);
+			ft_printf(1, "%d\n", shell->exit_value);
+			free(line);
+			continue ;
+		}
 		if (line[0] != '\0')
 		{
 			add_history(line);

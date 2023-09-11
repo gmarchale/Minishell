@@ -119,7 +119,7 @@ t_cmd	*lst_to_cmd(t_lexlst *lexlst)
 	stop = 0;
 	while (lexlst)
 	{
-		cmd->cmd = malloc(sizeof(char *) * get_arr_size(lexlst) + 1);
+		cmd->cmd = malloc(sizeof(char *) * (get_arr_size(lexlst) + 1));
 		if (cmd->cmd == NULL)
 			exit(shell->exit_value);
 		i = 0;
