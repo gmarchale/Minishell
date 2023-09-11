@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:56:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/08 18:35:51 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/11 16:58:14 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,15 +233,14 @@ void	trim_quotes(t_lexlst *lexlst, int *sq, int *dq)
 	while (lexlst)
 	{
 		buffer = ft_calloc(sizeof(char), ft_strlen(lexlst->word) + 1);
-		set_ints_to_zero(&i, &j, sq, dq);
+		set_ints_to_zero(&i, &j, sq, dq);		
 		while (lexlst->word[i])
 		{
-			if (lexlst->word[i] == '\'' || lexlst->word[i] == '"')
-			{
-				while (edit_quote_status(lexlst->word[i], sq, dq))
-					i++;
-			}
-			copy_and_increment(lexlst, buffer, &i, &j);
+			if ((lexlst->word[i] == '\'' || lexlst->word[i] == '"') && \
+				edit_quote_status(lexlst->word[i], sq, dq))
+				i++;
+			else
+				copy_and_increment(lexlst, buffer, &i, &j);
 		}
 		buffer[j] = '\0';
 		free(lexlst->word);
