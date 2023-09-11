@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 16:55:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/08 19:26:08 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/10 17:11:06 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int make_arr_and_get_fds(t_cmd **cmd, t_lexlst **lexlst, int *i, int *stop)
 		(*cmd)->fd_out = get_fd((*lexlst)->next->word, (*lexlst)->type);
 		*lexlst = (*lexlst)->next;
 	}
-	// else if (lexlst->type == e_heredoc)
-	// {
-	// 	// w8
-	// }
+	else if ((*lexlst)->type == e_heredoc)
+	{
+		(*cmd)->fd_in = create_heredoc((*lexlst)->next->word);
+	}
 	if ((*cmd)->fd_in == -1 || (*cmd)->fd_out == -1)
 	{
 		(*cmd)->fd_in = -2;

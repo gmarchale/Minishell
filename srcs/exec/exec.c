@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/08 20:18:02 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/10 16:56:12 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ void	execution(t_cmd *cmdlst)
 {
 	char	**env;
 
+	signal_handler(1);
 	if (!cmdlst)
 		return ;
 	if (is_solo_builtin(cmdlst))
@@ -285,4 +286,5 @@ void	execution(t_cmd *cmdlst)
 		//print_env_arr(env);
 		execute(cmdlst, env);
 	}
+	signal_handler(0);
 }
