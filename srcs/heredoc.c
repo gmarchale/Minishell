@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 17:42:13 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/10 17:55:34 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/12 14:33:38 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	create_heredoc(char *lim)
 	int i;
 	char *line;
 
-	fd = open("heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644); //change path
+	fd = open("/tmp/minishell_heredoc.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644); //change path
 	if (!fd)
 		return (-1);
 	i = 1;
@@ -34,7 +34,7 @@ int	create_heredoc(char *lim)
 	}
 	free(line);
 	close(fd);
-	fd = open("heredoc.txt", O_RDONLY); // change path
+	fd = open("/tmp/minishell_heredoc.tmp", O_RDONLY); // change path
 	close(fd); // necessary ?
 	return (fd);
 }
