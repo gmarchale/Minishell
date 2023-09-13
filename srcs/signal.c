@@ -6,7 +6,7 @@
 /*   By: gmarchal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:38:43 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/10 17:51:03 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:24:12 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ static void	rl_new_line(int sig)
 	rl_on_new_line();
 }
 
+static void	backslash_new_line(int sig)
+{
+	(void) sig;
+	write(1, "Quit:3", 6);
+	write(1, "\n", 1);
+	rl_on_new_line();
+}
+
 static void	sig_ctrl_c(int sig)
 {
 	(void) sig;
@@ -44,7 +52,7 @@ static void	sig_backslash(int sig)
 	rl_redisplay();
 }
 
-void	signal_handler(int input) // Appeler la fonction au debut de minishell et dans la boucle while avant le readline
+void	signal_handler(int input)
 {
 	signal(SIGQUIT, SIG_IGN);
 	if (input == 0)
@@ -52,11 +60,10 @@ void	signal_handler(int input) // Appeler la fonction au debut de minishell et d
 	else if (input == 1) // cat / grep 
 	{
 		signal(SIGINT, &rl_new_line);
-		signal(SIGQUIT, &rl_new_line);
+		signal(SIGQUIT, &backslash_new_line);
 	}
 	else if (input == 2) // a tester quand il y aura le heredoc
 	{
-		//signal(SIGINT, &sig_ctrl_c);
 		signal(SIGINT, &rl_new_line);
 		signal(SIGQUIT, &sig_backslash);
 	}

@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/26 11:37:43 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/13 16:24:48 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	export_parsing(char *n_key)
 		i++;
 	}
 	return (1);
-}	
+}
 
 static int	parse_var(char *str)
 {
