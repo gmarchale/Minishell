@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/11 16:21:38 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:48:55 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,20 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	shell->env = env;
+	shell->exit_value = 0;
 	while (1)
 	{
 		signal_handler(0);
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
 			return (0); // free plus tard
-		if (!ft_strncmp(line, "echo $?", 8))
-		{
-			add_history(line);
-			ft_printf(1, "%d\n", shell->exit_value);
-			free(line);
-			continue ;
-		}
+		// if (!ft_strncmp(line, "echo $?", 8))
+		// {
+		// 	add_history(line);
+		// 	ft_printf(1, "%d\n", shell->exit_value);
+		// 	free(line);
+		// 	continue ;
+		// }
 		if (line[0] != '\0')
 		{
 			add_history(line);
@@ -105,6 +106,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			free(line);
+			shell->exit_value = 0;
 			continue ;
 		}
 		free(line);
@@ -125,6 +127,7 @@ int	main(int argc, char **argv, char **envp)
 		if (parser(str_input))
 		{
 			lexlst_clear(&str_input);
+			shell->exit_value = 2;
 			continue ;
 		}
 		expander(str_input);

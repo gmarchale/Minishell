@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 17:56:06 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/11 16:58:14 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/12 17:43:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,24 @@ void	add_value_to_new(char *str, char *new, int *j)
 	free(value);
 }
 
+void	add_exit_value_to_new(char *new, int *j)
+{
+	int		i;
+	char	*value;
+
+	value = ft_itoa(shell->exit_value);
+	if (!value)
+		exit(shell->exit_value);
+	i = 0;
+	while (value[i])
+	{
+		new[*j] = value[i];
+		i++;
+		*j += 1;
+	}
+	free(value);
+}
+
 void	increment_both_int(int *i, int *j)
 {
 	if (!i || !j)
@@ -124,7 +142,12 @@ void	copy_and_increment(t_lexlst *tmp, char *new, int *i, int *j)
 
 void	copy_key_value(t_lexlst *tmp, char *new, int *i, int *j)
 {
-	if (ft_isalpha(tmp->word[*i + 1]))
+	if (tmp->word[*i + 1] == '?')
+	{
+		add_exit_value_to_new(new, j);
+		*i += 2;
+	}
+	else if (ft_isalpha(tmp->word[*i + 1]))
 	{
 		add_value_to_new(&tmp->word[*i], new, j);
 		*i += skip_key(&tmp->word[*i]);
@@ -173,7 +196,12 @@ void	expand(t_lexlst *tmp, int *sq, int *dq)
 			edit_quote_status(tmp->word[i], sq, dq);
 		if (tmp->word[i] == '$' && *sq == 0)
 		{
-			if (ft_isalpha(tmp->word[i + 1]))
+			if (tmp->word[i + 1] == '?')
+			{
+				count += ft_strlen(ft_itoa(shell->exit_value));
+				i += 2;
+			}
+			else if (ft_isalpha(tmp->word[i + 1]))
 			{
 				count += get_env_value_size(&tmp->word[i]);
 				i += skip_key(&tmp->word[i]);

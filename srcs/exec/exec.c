@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/10 16:56:12 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:03:31 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,9 @@ void	wait_pids(t_pids *pids)
 	while (pids)
 	{
 		//ft_printf(1, "waiting for pid %d\n", pids->pid);
-		waitpid(pids->pid, NULL, 0);
+		waitpid(pids->pid, &shell->exit_value, 0);
+		if (shell->exit_value >= 256)
+			shell->exit_value = shell->exit_value / 256;
 		pids = pids->next;
 	}
 }
@@ -189,6 +191,11 @@ void	exec_command(t_cmd *cmdlst, char **env)
 {
 	char	*path;
 	
+	if (cmdlst->cmd[0][0] == '\0')
+	{
+		ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", cmdlst->cmd[0]);
+		exit(127);
+	}
 	path = get_path(cmdlst->cmd[0], env);
 	if (!path)
 	{
@@ -197,19 +204,19 @@ void	exec_command(t_cmd *cmdlst, char **env)
 			if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
 			{
 				perror("execve");
-				exit(EXIT_FAILURE);
+				exit(126);
 			}
 		}
 		else
 		{
 			ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", cmdlst->cmd[0]);
-			exit(EXIT_FAILURE);
+			exit(127);
 		}
 	}
 	else if (execve(path, cmdlst->cmd, env))
 	{
 		perror("execve");
-		exit(EXIT_FAILURE);
+		exit(126);
 	}
 }
 
