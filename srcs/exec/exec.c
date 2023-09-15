@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/12 18:03:31 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/15 12:52:31 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtin(char	*cmd)
 {
 	if (!cmd)
-		exit (EXIT_FAILURE);
+		return (0);
 	if ((key_check(cmd, "echo")) || (key_check(cmd, "cd")) || \
 		(key_check(cmd, "pwd")) || (key_check(cmd, "export")) || \
 		(key_check(cmd, "unset")) || (key_check(cmd, "env")) || \
@@ -48,6 +48,25 @@ void	exec_builtin(t_cmd *cmdlst)
 		builtin_env(cmdlst->cmd, ENV);
 	else if (key_check(cmdlst->cmd[0], "exit"))
 		builtin_exit(cmdlst->cmd);
+}
+
+void	exec_child_builtin(t_cmd *cmdlst)
+{
+	if (key_check(cmdlst->cmd[0], "echo"))
+		builtin_echo(cmdlst->cmd);
+	else if (key_check(cmdlst->cmd[0], "cd"))
+		builtin_cd(cmdlst->cmd);
+	else if (key_check(cmdlst->cmd[0], "pwd"))
+		builtin_pwd();
+	else if (key_check(cmdlst->cmd[0], "export"))
+		builtin_export(cmdlst->cmd);
+	else if (key_check(cmdlst->cmd[0], "unset"))
+		builtin_unset(cmdlst->cmd);
+	else if (key_check(cmdlst->cmd[0], "env"))
+		builtin_env(cmdlst->cmd, ENV);
+	else if (key_check(cmdlst->cmd[0], "exit"))
+		builtin_exit(cmdlst->cmd);
+	exit(EXIT_SUCCESS);
 }
 
 int	get_env_size(void)
@@ -120,7 +139,6 @@ void	wait_pids(t_pids *pids)
 {
 	while (pids)
 	{
-		//ft_printf(1, "waiting for pid %d\n", pids->pid);
 		waitpid(pids->pid, &shell->exit_value, 0);
 		if (shell->exit_value >= 256)
 			shell->exit_value = shell->exit_value / 256;
@@ -162,29 +180,29 @@ char	*get_path(char *cmd, char **envp)
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	if (envp[i])
+	path_tab = ft_split(envp[i], ':');
+	if (!path_tab)
+		return (NULL);
+	i = -1;
+	while (path_tab[++i])
 	{
-		path_tab = ft_split(envp[i], ':');
-		if (!path_tab)
-		{			
-			ft_printf(STDERR_FILENO, "minishell: error in path split\n");
-			exit(EXIT_FAILURE);
-		}
-		i = -1;
-		while (path_tab[++i])
+		path = ft_strjoin(path_tab[i], "/");
+		path = strjoin_free_first(path, cmd);
+		if (!access(path, F_OK))
 		{
-			path = ft_strjoin(path_tab[i], "/");
-			path = strjoin_free_first(path, cmd);
-			if (!access(path, F_OK))
-			{
-				free_tab(path_tab);
-				return (path);
-			}
-			free(path);
+			free_tab(path_tab);
+			return (path);
 		}
-		free_tab(path_tab);
+		free(path);
 	}
+	free_tab(path_tab);
 	return (NULL);
+}
+
+void	perror_exit(char *str, int value)
+{
+	perror(str);
+	exit(value);
 }
 
 void	exec_command(t_cmd *cmdlst, char **env)
@@ -196,16 +214,15 @@ void	exec_command(t_cmd *cmdlst, char **env)
 		ft_printf(STDERR_FILENO, "minishell: %s: command not found\n", cmdlst->cmd[0]);
 		exit(127);
 	}
+	if (is_builtin(cmdlst->cmd[0]))
+		exec_child_builtin(cmdlst);
 	path = get_path(cmdlst->cmd[0], env);
 	if (!path)
 	{
 		if (!access(cmdlst->cmd[0], F_OK))
 		{
 			if (execve(cmdlst->cmd[0], cmdlst->cmd, env))
-			{
-				perror("execve");
-				exit(126);
-			}
+				perror_exit("execve", 126);
 		}
 		else
 		{
@@ -214,22 +231,103 @@ void	exec_command(t_cmd *cmdlst, char **env)
 		}
 	}
 	else if (execve(path, cmdlst->cmd, env))
+		perror_exit("execve", 126);
+}
+
+void	link_pipe(t_cmd *cmdlst, int pipes[2][2])
+{
+	if (pipes[0][0] != -1)
 	{
-		perror("execve");
-		exit(126);
+		if (dup2(pipes[0][0], STDIN_FILENO) == -1)
+			perror_exit("dup2", EXIT_FAILURE);
+	}
+	else if (cmdlst->fd_in != STDIN_FILENO)
+	{
+		if (dup2(cmdlst->fd_in, STDIN_FILENO) == -1)
+			perror_exit("dup2", EXIT_FAILURE);
+		close(cmdlst->fd_in);
+	}
+	close(pipes[0][0]);
+	close(pipes[0][1]);
+	if (cmdlst->fd_out == STDOUT_FILENO)
+	{
+		if (dup2(pipes[1][1], STDOUT_FILENO) == -1)
+			perror_exit("dup2", EXIT_FAILURE);
+	}
+	else if (cmdlst->fd_out != STDOUT_FILENO)
+	{
+		if (dup2(cmdlst->fd_out, STDOUT_FILENO) == -1)
+			perror_exit("dup2", EXIT_FAILURE);
+		close(cmdlst->fd_out);
+	}
+	close(pipes[1][0]);
+	close(pipes[1][1]);
+}
+
+void	last_link(t_cmd *cmdlst, int pipes[2])
+{
+	if (cmdlst->fd_in != STDIN_FILENO)
+	{
+		if (pipes[0] != -1)
+			close(pipes[0]);
+		dup2(cmdlst->fd_in, STDIN_FILENO);
+	}
+	else if (pipes[0] != -1)
+	{
+		dup2(pipes[0], STDIN_FILENO);
+		close(pipes[0]);
+	}
+	if (cmdlst->fd_out != STDOUT_FILENO)
+	{
+		dup2(cmdlst->fd_out, STDOUT_FILENO);
+		close(cmdlst->fd_out);
 	}
 }
 
-void	make_child(t_cmd *cmdlst, char **env, t_pids **pids)
+void	close_pipes(t_cmd *cmdlst, int pipes[2][2])
+{
+	if (cmdlst->fd_in != STDIN_FILENO)
+		close(cmdlst->fd_in);
+	if (cmdlst->fd_out != STDOUT_FILENO)
+		close(cmdlst->fd_out);
+	if (pipes[0][0] != 1)
+		close(pipes[0][0]);
+	close(pipes[1][1]);
+	pipes[0][0] = -1;
+	pipes[1][1] = -1;
+}
+
+void	make_child(t_cmd *cmdlst, char **env, t_pids **pids, int pipes[2][2])
 {
 	int	pid;
-	int	fd[2];
 
-	if (pipe(fd) == -1)
+	if (pipe(pipes[1]) == -1)
 	{
 		perror("pipe");
-		return ;
+		exit(EXIT_FAILURE);
 	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		link_pipe(cmdlst, pipes);
+		exec_command(cmdlst, env);
+	}
+	else
+	{
+		close_pipes(cmdlst, pipes);
+		add_pid_to_list(pids, pid);
+	}
+}
+
+void	last_child(t_cmd *cmdlst, char **env, t_pids **pids, int pipes[2])
+{
+	int	pid;
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -238,44 +336,65 @@ void	make_child(t_cmd *cmdlst, char **env, t_pids **pids)
 	}
 	if (pid == 0)
 	{
-		// if redir -- else
-		dup2(STDIN_FILENO, fd[0]);
-		dup2(STDOUT_FILENO, fd[1]);
-		dup2(cmdlst->fd_in, STDIN_FILENO);
-		dup2(cmdlst->fd_out, STDOUT_FILENO);
+		last_link(cmdlst, pipes);
 		exec_command(cmdlst, env);
-		close(fd[0]);
-		close(fd[1]);
 	}
 	else
 	{
+		if (pipes[0] != -1)
+			close(pipes[0]);
+		if (cmdlst->fd_out != STDOUT_FILENO)
+			close(cmdlst->fd_out);
+		if (cmdlst->fd_in != STDIN_FILENO)
+			close(cmdlst->fd_in);
 		add_pid_to_list(pids, pid);
-		close(fd[0]);
-		close(fd[1]);
 	}
 }
 
 void	execute(t_cmd *cmdlst, char **env)
 {
 	t_pids	*pids;
+	int		pipes[2][2];
 
 	pids = NULL;
-	while (cmdlst)
+	pipes[0][0] = -1;
+	pipes[0][1] = -1;
+	pipes[1][0] = -1;
+	pipes[1][1] = -1;
+	while (cmdlst->next)
 	{
-		// save_base_fds();
-		make_child(cmdlst, env, &pids);
+		if (cmdlst->fd_in == -2 || cmdlst->fd_out == -2 || !cmdlst->cmd[0])
+		{
+			if (cmdlst->fd_in != STDIN_FILENO)
+				close(cmdlst->fd_in);
+			if (cmdlst->fd_out != STDOUT_FILENO)
+				close(cmdlst->fd_out);
+			close(pipes[0][0]);
+			close(pipes[0][1]);
+			cmdlst = cmdlst->next;
+			continue ;
+		}
+		make_child(cmdlst, env, &pids, pipes);
 		cmdlst = cmdlst->next;
-		// restore_base_fds();
+		pipes[0][0] = pipes[1][0];
+		pipes[0][1] = pipes[1][1];
+		pipes[1][0] = -1;
+		pipes[1][1] = -1;
 	}
-	//sleep(1);
+	if ((cmdlst->fd_in != -2 || cmdlst->fd_out != -2) && cmdlst->cmd[0])
+		last_child(cmdlst, env, &pids, pipes[0]);
+	else
+	{
+		if (cmdlst->fd_in != STDIN_FILENO)
+			close(cmdlst->fd_in);
+		if (cmdlst->fd_out != STDOUT_FILENO)
+			close(cmdlst->fd_out);
+		close(pipes[0][0]);
+		close(pipes[0][1]);
+	}
 	wait_pids(pids);
+	unlink("/tmp/heredoc.tmp");
 	free_pids_list(pids);
-}
-
-void	print_env_arr(char **arr) //tmp
-{
-	while (*arr)
-		ft_printf(1, "%s\n", *arr++);
 }
 
 void	execution(t_cmd *cmdlst)
@@ -290,7 +409,6 @@ void	execution(t_cmd *cmdlst)
 	else
 	{
 		env = env_to_list();
-		//print_env_arr(env);
 		execute(cmdlst, env);
 	}
 	signal_handler(0);
