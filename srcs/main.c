@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/12 17:48:55 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/14 18:59:22 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		signal_handler(0);
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
-			return (0); // free plus tard
+			return (shell->exit_value); // free plus tard
 		// if (!ft_strncmp(line, "echo $?", 8))
 		// {
 		// 	add_history(line);
