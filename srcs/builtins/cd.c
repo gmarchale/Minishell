@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:00:52 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/26 11:28:23 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/15 17:40:35 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	builtin_cd(char **str)
 	if (!str[1])
 	{
 		go_to_home();
+		change_env_pwd();
 		return ;
 	}
 	if (chdir(str[1]) == -1)

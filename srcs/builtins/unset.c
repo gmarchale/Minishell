@@ -6,11 +6,28 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/26 11:29:18 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:36:46 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	export_parsing(char *n_key)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(n_key[i]) && n_key[i] != '_')
+		return (0);
+	i++;
+	while (n_key[i])
+	{
+		if (!ft_isalnum(n_key[i]) && n_key[i] != '-')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	unset_var(char *key)
 {
@@ -46,6 +63,13 @@ void	builtin_unset(char **str)
 	i = 1;
 	if (!str[i])
 		return ;
+	if (!export_parsing(str[i]))
+	{
+		ft_printf(2, \
+		"minishell: unset: '%s': not a valid indentifier\n", \
+		str[i]);
+		return ;
+	}
 	while (str[i])
 	{
 		key = str[i];
