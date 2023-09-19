@@ -6,14 +6,13 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/08 19:31:58 by noloupe          ###   ########.fr        #
+#    Updated: 2023/09/19 14:54:22 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 
 FILES		=	main.c\
-				builtins/tester.c\
 				builtins/cmd_utils.c\
 				builtins/echo.c\
 				builtins/cd.c\
@@ -23,18 +22,31 @@ FILES		=	main.c\
 				builtins/env.c\
 				builtins/exit.c\
 				env/env.c\
+				env/env_utils.c\
 				exec/exec.c\
+				exec/exec_builtins.c\
+				exec/get_path.c\
+				exec/link_pipes.c\
+				exec/make_env_list.c\
+				exec/perror_exit.c\
+				exec/pids.c\
+				exec/pipes_utils.c\
+				exec/solo_fds.c\
 				libft/str_utils.c\
 				parser/lexer.c\
 				parser/lexer_utils.c\
 				parser/lex_list.c\
 				parser/mini_utils.c\
 				parser/parser.c\
-				parser/lexlst_utils.c\
 				parser/lst_to_cmd.c\
+				parser/lst_types.c\
+				parser/copy_key_value.c\
+				parser/expander_utils.c\
+				parser/expand.c\
+				parser/get_env_value_size.c\
 				parser/expander.c\
+				parser/heredoc.c\
 				signal.c\
-				heredoc.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

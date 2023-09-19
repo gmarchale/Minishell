@@ -6,53 +6,11 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/14 18:59:22 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:08:03 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void print_arr(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		ft_printf(1, "[%d]: %s\n", i, arr[i]);
-		i++;
-	}
-}
-
-void print_cmds(t_cmd *cmdlst)
-{
-	int	i;
-
-	i = 1;
-	while (cmdlst)
-	{
-		ft_printf(1, "\n");
-		ft_printf(1, "--- node #%d ---\n", i);
-		print_arr(cmdlst->cmd);
-		ft_printf(1, "fd in : %d\n", cmdlst->fd_in);
-		ft_printf(1, "fd out : %d\n", cmdlst->fd_out);
-		cmdlst = cmdlst->next;
-		i++;
-	}
-}
-
-void	free_cmdlst(t_cmd *cmdlst)
-{
-	t_cmd	*previous;
-
-	while (cmdlst)
-	{
-		free_tab(cmdlst->cmd);
-		previous = cmdlst;
-		cmdlst = cmdlst->next;
-		free(previous);
-	}
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -62,13 +20,9 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 
 
-	(void)argv;
-	if (argc != 1)
-	{
-		ft_printf(1, "Do not provide arguments\n");
-		return (1);
-	}
-	signal_handler(0);
+	if (argc != 1 || argv[1])
+		return (ft_printf(2, "Do not provide arguments\n"));
+	signal_handler(0); //utile ? (dans la boucle ligne 44)
 	str_input = NULL;
 	shell = malloc(sizeof(t_shell));
 	if (!shell)
@@ -79,8 +33,8 @@ int	main(int argc, char **argv, char **envp)
 		env = create_env();
 	if (!env)
 	{
-		printf("env failed\n");
 		free(shell);
+		ft_printf(2, "env failed\n");
 		exit(1);
 	}
 	shell->env = env;
@@ -90,40 +44,19 @@ int	main(int argc, char **argv, char **envp)
 		signal_handler(0);
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
-			return (shell->exit_value); // free plus tard
-		// if (!ft_strncmp(line, "echo $?", 8))
-		// {
-		// 	add_history(line);
-		// 	ft_printf(1, "%d\n", shell->exit_value);
-		// 	free(line);
-		// 	continue ;
-		// }
+			exit(shell->exit_value);
 		if (line[0] != '\0')
 		{
 			add_history(line);
 			str_input = lexer(line);
 		}
-		else
+		if (!str_input)
 		{
 			free(line);
 			shell->exit_value = 0;
 			continue ;
 		}
 		free(line);
-		// if (!str_input)
-		// 	return(shell->exit_value);
-		// lexlst_to_cmd(str_input);
-		/////
-		// t_lexlst *tmp = NULL;
-		
-		// tmp = str_input;
-		// while(tmp != NULL)
-		// {
-		// 	printf("old: %d	- {%s}\n", tmp->type, tmp->word);
-		// 	tmp = tmp->next;
-		// }
-		// printf("\n");
-		/////
 		if (parser(str_input))
 		{
 			lexlst_clear(&str_input);
@@ -131,19 +64,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		expander(str_input);
-		/////
-		// tmp = NULL;
-		// tmp = str_input;
-		// while(tmp != NULL)
-		// {
-		// 	printf("new: %d	- {%s}\n", tmp->type, tmp->word);
-		// 	tmp = tmp->next;
-		// }
-		// printf("\n");
-		/////
 		cmdlst = lst_to_cmd(str_input);
-		free_lexlst(str_input);
-		// print_cmds(cmdlst);
+		lexlst_clear(&str_input);
 		execution(cmdlst);
 		free_cmdlst(cmdlst);
 	}

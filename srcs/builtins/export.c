@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/15 19:37:57 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:16:40 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	export_var(char **n_key, char **n_value)
 		ft_printf(2, \
 		"minishell: export: '%s': not a valid indentifier\n", \
 		*n_key);
+		shell->exit_value = 2;
 		return ;
 	}
 	if (!check_doubles(&shell->env, *n_key))

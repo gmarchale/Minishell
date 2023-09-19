@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/15 19:02:08 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:18:15 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	env_print(char **str)
 	if (str[1])
 	{
 		ft_printf(1, "env does not want any argument today \U0001f621\n");
+		shell->exit_value = 127;
 		return ;
 	}
 	tmp = shell->env;

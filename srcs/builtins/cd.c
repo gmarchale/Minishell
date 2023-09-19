@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:00:52 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/15 17:40:35 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:15:20 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,23 @@ void	go_to_home(void)
 	if (!is_key_set("HOME"))
 	{
 		ft_printf(1, "minishell: cd: HOME not set\n");
+		shell->exit_value = 1;
 		return ;
 	}
 	home = dup_env_value("HOME");
 	if (home)
 	{
 		if (home[0] != '\0' && chdir(home) == -1)
+		{
 			ft_printf(1, "minishell: cd: %s: No such file or directory\n", home);
+			shell->exit_value = 1;
+		}
 	}
 	else
+	{
+		shell->exit_value = 1;
 		ft_printf(1, "minishell: cd: HOME not set\n");
+	}
 }
 
 void	builtin_cd(char **str)
@@ -72,6 +79,7 @@ void	builtin_cd(char **str)
 	if (str[1] && str[2])
 	{
 		ft_printf(1, "minishell: cd: too many arguments\n");
+		shell->exit_value = 1;
 		return ;
 	}
 	if (!str[1])
@@ -83,6 +91,7 @@ void	builtin_cd(char **str)
 	if (chdir(str[1]) == -1)
 	{
 		ft_printf(1, "minishell: cd: %s: No such file or directory\n", str[1]);
+		shell->exit_value = 1;
 		return ;
 	}
 	change_env_pwd();

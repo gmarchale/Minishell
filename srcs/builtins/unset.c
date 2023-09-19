@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/15 19:36:46 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:17:32 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	builtin_unset(char **str)
 		ft_printf(2, \
 		"minishell: unset: '%s': not a valid indentifier\n", \
 		str[i]);
+		shell->exit_value = 2;
 		return ;
 	}
 	while (str[i])

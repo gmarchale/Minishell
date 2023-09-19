@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexlst_utils.c                                     :+:      :+:    :+:   */
+/*   perror_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/14 15:00:05 by noloupe           #+#    #+#             */
-/*   Updated: 2023/08/14 15:05:58 by noloupe          ###   ########.fr       */
+/*   Created: 2023/09/19 14:43:10 by noloupe           #+#    #+#             */
+/*   Updated: 2023/09/19 14:43:30 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_lexlst(t_lexlst *lexlst)
+void	perror_exit(char *str, int value)
 {
-	if (!lexlst)
-		return ;
-	while (lexlst)
-	{
-		free(lexlst->word);
-		lexlst = lexlst->next;
-	}
-	free(lexlst);
+	perror(str);
+	exit(value);
 }
