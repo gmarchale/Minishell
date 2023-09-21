@@ -6,36 +6,45 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/21 14:03:38 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 14:38:17 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	read_and_tokenize(t_lexlst **str_input)
+{
+	char	*line;
+
+	signal_handler(0);
+	line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
+	if (line == NULL)
+		exit(g_shell->exit_value);
+	if (line[0] != '\0')
+	{
+		add_history(line);
+		*str_input = lexer(line);
+	}
+	if (!*str_input)
+	{
+		free(line);
+		g_shell->exit_value = 0;
+		return (1);
+	}
+	free(line);
+	return (0);
+}
+
 void	loop_shell(void)
 {
-	char		*line;
 	t_lexlst	*str_input;
 	t_cmd		*cmdlst;
-	
+
+	str_input = NULL;
 	while (1)
 	{
-		signal_handler(0);
-		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
-		if (line == NULL)
-			exit(g_shell->exit_value);
-		if (line[0] != '\0')
-		{
-			add_history(line);
-			str_input = lexer(line);
-		}
-		if (!str_input)
-		{
-			free(line);
-			g_shell->exit_value = 0;
+		if (read_and_tokenize(&str_input))
 			continue ;
-		}
-		free(line);
 		if (parser(str_input))
 		{
 			lexlst_clear(&str_input);
@@ -53,7 +62,6 @@ void	loop_shell(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*env;
-
 
 	if (argc != 1 || argv[1])
 		return (ft_printf(2, "Do not provide arguments\n"));
