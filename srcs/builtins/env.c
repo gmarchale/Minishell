@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:18:15 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:12:39 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_env	*create_sorted_env_cpy(void)
 	t_env	*cpy;
 
 	cpy = NULL;
-	tmp = shell->env;
+	tmp = g_shell->env;
 	while (tmp)
 	{
 		add_node(&cpy, tmp->key, tmp->value);
@@ -78,10 +78,10 @@ void	env_print(char **str)
 	if (str[1])
 	{
 		ft_printf(1, "env does not want any argument today \U0001f621\n");
-		shell->exit_value = 127;
+		g_shell->exit_value = 127;
 		return ;
 	}
-	tmp = shell->env;
+	tmp = g_shell->env;
 	while (tmp)
 	{
 		if (tmp->value)
@@ -90,10 +90,10 @@ void	env_print(char **str)
 	}
 }
 
-void	builtin_env(char **str, int MODE)
+void	builtin_env(char **str, int mode)
 {
-	if (MODE == ENV)
+	if (mode == e_env)
 		env_print(str);
-	else if (MODE == EXPORT)
+	else if (mode == e_export)
 		export_print();
 }

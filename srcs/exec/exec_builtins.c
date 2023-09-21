@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:26:33 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 14:30:47 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:04:51 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	exec_builtin(t_cmd *cmdlst)
 	else if (key_check(cmdlst->cmd[0], "unset"))
 		builtin_unset(cmdlst->cmd);
 	else if (key_check(cmdlst->cmd[0], "env"))
-		builtin_env(cmdlst->cmd, ENV);
+		builtin_env(cmdlst->cmd, e_env);
 	else if (key_check(cmdlst->cmd[0], "exit"))
 		builtin_exit(cmdlst->cmd);
 }
@@ -63,7 +63,7 @@ void	exec_child_builtin(t_cmd *cmdlst)
 	else if (key_check(cmdlst->cmd[0], "unset"))
 		builtin_unset(cmdlst->cmd);
 	else if (key_check(cmdlst->cmd[0], "env"))
-		builtin_env(cmdlst->cmd, ENV);
+		builtin_env(cmdlst->cmd, e_env);
 	else if (key_check(cmdlst->cmd[0], "exit"))
 		builtin_exit(cmdlst->cmd);
 	exit(EXIT_SUCCESS);

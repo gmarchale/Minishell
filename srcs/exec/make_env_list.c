@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:46:13 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 14:46:34 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:15:07 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	get_env_size(void)
 	t_env	*save;
 	int		i;
 
-	save = shell->env;
+	save = g_shell->env;
 	i = 0;
 	while (save)
 	{
@@ -35,8 +35,8 @@ char	**env_to_list(void)
 
 	env = malloc(sizeof(char *) * (get_env_size() + 1));
 	if (!env)
-		exit(shell->exit_value);
-	save = shell->env;
+		exit(g_shell->exit_value);
+	save = g_shell->env;
 	i = 0;
 	while (save)
 	{

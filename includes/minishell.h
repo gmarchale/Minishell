@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmarchal <gmarchal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/04 17:43:49 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:20:11 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -32,13 +31,14 @@
 
 /*** ENUMS ***/
 
-enum	node_error		{NODE, KEY, VALUE};
-enum	env_printing	{ENV, EXPORT};
-enum	token_types		{e_word, e_pipe, e_redir_in, e_redir_out, e_heredoc, e_append, e_limiter};
+enum	e_node_error		{e_node, e_key, e_value};
+enum	e_env_printing		{e_env, e_export};
+enum	e_token_types		{e_word, e_pipe, e_redir_in,\
+							e_redir_out, e_heredoc, e_append, e_limiter};
 
 /*** GLOBAL ***/
 
-t_shell *shell;
+t_shell	*g_shell;
 
 /*** MAIN ***/
 
@@ -46,15 +46,14 @@ char	*readline(const char *prompt);
 
 /*** LIBFT ***/
 
-size_t	ft_strlen(const char *s); //delete
-char	*ft_strcpy(char *dest, char *src); //delete
+char	*ft_strcpy(char *dest, char *src);
 
 /*** Signals ***/
 
-void    rl_replace_line(char *s, int n); //necessaire sinon le signal fonctionne pas (ask bruno)
+void	rl_replace_line(char *s, int n);
 void	signal_handler(int input);
 
 /*** Heredoc ***/
-int	create_heredoc(char *lim); //(t_lexlst lim)
+int		create_heredoc(char *lim);
 
 #endif

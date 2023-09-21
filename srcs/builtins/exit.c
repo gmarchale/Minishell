@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:52:48 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:20:29 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:13:00 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	builtin_exit(char **str)
 
 	ft_printf(1, "exit\n");
 	if (!str[1])
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	overflow = 0;
 	arg = check_arg(str[1], &overflow);
 	if (overflow)
@@ -68,6 +68,6 @@ void	builtin_exit(char **str)
 	else
 	{
 		ft_printf(1, "minishell: exit: too many arguments\n");
-		shell->exit_value = 1;
+		g_shell->exit_value = 1;
 	}
 }

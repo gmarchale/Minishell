@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 16:55:22 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/18 17:47:18 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:16:08 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*cmd_new_node(void)
 
 	new = malloc(sizeof(t_cmd));
 	if (!new)
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	new->cmd = NULL;
 	new->fd_in = 0;
 	new->fd_out = 1;
@@ -95,7 +95,7 @@ t_cmd	*lst_to_cmd(t_lexlst *lexlst)
 	{
 		cmd->cmd = malloc(sizeof(char *) * (get_arr_size(lexlst) + 1));
 		if (cmd->cmd == NULL)
-			exit(shell->exit_value);
+			exit(g_shell->exit_value);
 		i = 0;
 		while (lexlst)
 		{

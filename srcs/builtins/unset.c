@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:29:25 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:17:32 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:11:45 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	unset_var(char *key)
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = shell->env;
+	tmp = g_shell->env;
 	prev = NULL;
 	while (tmp)
 	{
 		if (key_check(tmp->key, key))
 		{
 			if (prev == NULL)
-				shell->env = tmp->next;
+				g_shell->env = tmp->next;
 			else
 				prev->next = tmp->next;
 			free(tmp->key);
@@ -68,7 +68,7 @@ void	builtin_unset(char **str)
 		ft_printf(2, \
 		"minishell: unset: '%s': not a valid indentifier\n", \
 		str[i]);
-		shell->exit_value = 2;
+		g_shell->exit_value = 2;
 		return ;
 	}
 	while (str[i])

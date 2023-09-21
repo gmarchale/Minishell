@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:03:28 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/19 14:58:13 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:18:07 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int			count_pipes(t_lexlst *lex);
 /*** PARSER ***/
 
 bool		is_set(char c, char *charset);
-int 		parser(t_lexlst *lexlst);
+int			parser(t_lexlst *lexlst);
 
 /*** EXPANDER ***/
 

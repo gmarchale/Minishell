@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 18:27:12 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/18 18:32:41 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:17:02 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expand_word(t_lexlst *tmp, int count, int *sq, int *dq)
 
 	new = malloc(sizeof(char) * count + 1);
 	if (!new)
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	i = 0;
 	j = 0;
 	while (tmp->word[i])
@@ -43,7 +43,7 @@ void	expand_types(t_lexlst **tmp, int *i, int *count)
 
 	if ((*tmp)->word[*i + 1] == '?')
 	{
-		str = ft_itoa(shell->exit_value);
+		str = ft_itoa(g_shell->exit_value);
 		*count += ft_strlen(str);
 		free(str);
 		*i += 2;

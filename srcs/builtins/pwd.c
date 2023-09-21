@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:28:20 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:16:02 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:10:59 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_pwd(void)
 		printf("%s\n", str);
 	else
 	{
-		shell->exit_value = 1;
+		g_shell->exit_value = 1;
 		perror("pwd");
 	}
 	free(str);

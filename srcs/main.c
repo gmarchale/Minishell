@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:48:06 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/19 15:08:03 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:09:58 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_printf(2, "Do not provide arguments\n"));
 	signal_handler(0); //utile ? (dans la boucle ligne 44)
 	str_input = NULL;
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
+	g_shell = malloc(sizeof(t_shell));
+	if (!g_shell)
 		return (1);
 	if (*envp)
 		env = env_init(envp);
@@ -33,18 +33,18 @@ int	main(int argc, char **argv, char **envp)
 		env = create_env();
 	if (!env)
 	{
-		free(shell);
+		free(g_shell);
 		ft_printf(2, "env failed\n");
 		exit(1);
 	}
-	shell->env = env;
-	shell->exit_value = 0;
+	g_shell->env = env;
+	g_shell->exit_value = 0;
 	while (1)
 	{
 		signal_handler(0);
 		line = readline("\e[1;5;96m\U0001f90d Heaven \U0001f90d \u2022\e[0m ");
 		if (line == NULL)
-			exit(shell->exit_value);
+			exit(g_shell->exit_value);
 		if (line[0] != '\0')
 		{
 			add_history(line);
@@ -53,14 +53,14 @@ int	main(int argc, char **argv, char **envp)
 		if (!str_input)
 		{
 			free(line);
-			shell->exit_value = 0;
+			g_shell->exit_value = 0;
 			continue ;
 		}
 		free(line);
 		if (parser(str_input))
 		{
 			lexlst_clear(&str_input);
-			shell->exit_value = 2;
+			g_shell->exit_value = 2;
 			continue ;
 		}
 		expander(str_input);
@@ -70,6 +70,6 @@ int	main(int argc, char **argv, char **envp)
 		free_cmdlst(cmdlst);
 	}
 	free_env_list(env);
-	free(shell);
+	free(g_shell);
 	return (0);
 }

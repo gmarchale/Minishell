@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:11:32 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 15:13:16 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:14:46 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	execution(t_cmd *cmdlst)
 		return ;
 	if (is_solo_builtin(cmdlst))
 	{
-		shell->exit_value = 0;
+		g_shell->exit_value = 0;
 		base_in = dup(STDIN_FILENO);
 		base_out = dup(STDOUT_FILENO);
 		change_fds(cmdlst);

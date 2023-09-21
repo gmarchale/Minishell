@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:53:37 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 14:53:55 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:14:31 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_env	*free_node_error(t_env *node, int MODE)
 {
-	if (MODE == KEY)
+	if (MODE == e_key)
 		free(node);
-	else if (MODE == VALUE)
+	else if (MODE == e_value)
 	{
 		free(node->key);
 		free(node);
@@ -30,17 +30,17 @@ t_env	*create_node(char *key, char *value)
 
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
-		return (free_node_error(new_node, NODE));
+		return (free_node_error(new_node, e_node));
 	new_node->key = (char *)malloc(ft_strlen(key) + 1);
 	if (!new_node->key)
-		return (free_node_error(new_node, KEY));
+		return (free_node_error(new_node, e_key));
 	new_node->value = NULL;
 	ft_strcpy(new_node->key, key);
 	if (value)
 	{
 		new_node->value = (char *)malloc(ft_strlen(value) + 1);
 		if (!new_node->value)
-			return (free_node_error(new_node, VALUE));
+			return (free_node_error(new_node, e_value));
 		ft_strcpy(new_node->value, value);
 	}
 	new_node->next = NULL;

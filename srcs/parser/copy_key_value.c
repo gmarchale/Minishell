@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 17:59:35 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/18 18:32:57 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:16:42 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	add_value_to_new(char *str, char *new, int *j)
 	int		i;
 
 	key = get_key(str);
-	tmp = shell->env;
+	tmp = g_shell->env;
 	if (!go_to_key(&tmp, key))
 	{
 		free(key);
@@ -45,9 +45,9 @@ void	add_exit_value_to_new(char *new, int *j)
 	int		i;
 	char	*value;
 
-	value = ft_itoa(shell->exit_value);
+	value = ft_itoa(g_shell->exit_value);
 	if (!value)
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	i = 0;
 	while (value[i])
 	{

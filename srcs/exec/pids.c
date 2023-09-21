@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 14:31:29 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/19 14:31:42 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:15:27 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_pids	*add_new_pid(int pid)
 
 	new = malloc(sizeof(t_pids));
 	if (!new)
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	new->pid = pid;
 	new->next = NULL;
 	return (new);
@@ -50,14 +50,14 @@ void	wait_pids(t_pids *pids)
 		status = 0;
 		waitpid(pids->pid, &status, 0);
 		if (WIFEXITED(status))
-			shell->exit_value = WEXITSTATUS(status);
+			g_shell->exit_value = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 		{
 			sig = WTERMSIG(status);
 			if (sig == SIGINT)
-				shell->exit_value = 130;
+				g_shell->exit_value = 130;
 			else if (sig == SIGQUIT)
-				shell->exit_value = 131;
+				g_shell->exit_value = 131;
 		}
 		pids = pids->next;
 	}

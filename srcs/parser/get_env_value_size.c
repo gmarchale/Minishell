@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 17:53:35 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/18 18:29:39 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:17:16 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_size(char *key)
 {
 	t_env	*tmp;
 
-	tmp = shell->env;
+	tmp = g_shell->env;
 	if (!go_to_key(&tmp, key))
 	{
 		free(key);
@@ -36,7 +36,7 @@ char	*get_key(char *str)
 		i++;
 	key = malloc(sizeof(char) * i);
 	if (!key)
-		exit(shell->exit_value);
+		exit(g_shell->exit_value);
 	i = 1;
 	while (ft_isalnum(str[i]))
 	{
