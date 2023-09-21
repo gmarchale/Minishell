@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:24:43 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/05 16:56:48 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:12:39 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ t_env	*create_sorted_env_cpy(void)
 	t_env	*cpy;
 
 	cpy = NULL;
-	tmp = shell->env;
+	tmp = g_shell->env;
 	while (tmp)
 	{
 		add_node(&cpy, tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
-	sort_env(&cpy);
+	if (cpy)
+		sort_env(&cpy);
 	return (cpy);
 }
 
@@ -66,7 +67,8 @@ void	export_print(void)
 			ft_printf(1, "declare -x %s\n", tmp->key);
 		tmp = tmp->next;
 	}
-	free_env_list(tmp);
+	if (tmp)
+		free_env_list(tmp);
 }
 
 void	env_print(char **str)
@@ -76,9 +78,10 @@ void	env_print(char **str)
 	if (str[1])
 	{
 		ft_printf(1, "env does not want any argument today \U0001f621\n");
+		g_shell->exit_value = 127;
 		return ;
 	}
-	tmp = shell->env;
+	tmp = g_shell->env;
 	while (tmp)
 	{
 		if (tmp->value)
@@ -87,10 +90,10 @@ void	env_print(char **str)
 	}
 }
 
-void	builtin_env(char **str, int MODE)
+void	builtin_env(char **str, int mode)
 {
-	if (MODE == ENV)
+	if (mode == e_env)
 		env_print(str);
-	else if (MODE == EXPORT)
+	else if (mode == e_export)
 		export_print();
 }

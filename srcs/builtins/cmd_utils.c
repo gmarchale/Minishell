@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:50:02 by noloupe           #+#    #+#             */
-/*   Updated: 2023/06/26 11:28:59 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 13:10:10 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*dup_env_value(char *key)
 	char	*value;
 
 	value = NULL;
-	tmp = shell->env;
+	tmp = g_shell->env;
 	if (go_to_key(&tmp, key))
 		value = tmp->value;
 	return (value);

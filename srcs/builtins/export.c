@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 15:51:11 by noloupe           #+#    #+#             */
-/*   Updated: 2023/09/13 16:24:48 by gmarchal         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:50:03 by gmarchal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,18 @@ static void	export_var(char **n_key, char **n_value)
 {
 	t_env	*tmp;
 
-	tmp = shell->env;
+	tmp = g_shell->env;
 	if (!export_parsing(*n_key))
 	{
-		ft_printf(2, "minishell: export: '%s': \
-		not a valid indentifier\n", *n_key);
+		ft_printf(2, \
+		"minishell: export: '%s': not a valid indentifier\n", \
+		*n_key);
+		g_shell->exit_value = 2;
 		return ;
 	}
-	if (!check_doubles(&shell->env, *n_key))
+	if (!check_doubles(&g_shell->env, *n_key))
 	{
-		add_node(&shell->env, *n_key, *n_value);
+		add_node(&g_shell->env, *n_key, *n_value);
 		return ;
 	}
 	while (!key_check(tmp->key, *n_key))
@@ -90,7 +92,7 @@ void	builtin_export(char **str)
 
 	i = 1;
 	if (!str[i])
-		return (builtin_env(str, EXPORT));
+		return (builtin_env(str, e_export));
 	n_value = NULL;
 	while (str[i])
 	{
