@@ -6,7 +6,7 @@
 #    By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 13:08:03 by noloupe           #+#    #+#              #
-#    Updated: 2023/09/19 14:54:22 by noloupe          ###   ########.fr        #
+#    Updated: 2023/09/21 14:23:27 by noloupe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ FILES		=	main.c\
 				parser/expander.c\
 				parser/heredoc.c\
 				signal.c\
+				sig_utils.c\
 
 SRCS		=	$(addprefix srcs/, $(FILES))
 

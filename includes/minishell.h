@@ -6,7 +6,7 @@
 /*   By: noloupe <noloupe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:40:21 by gmarchal          #+#    #+#             */
-/*   Updated: 2023/09/21 13:20:11 by noloupe          ###   ########.fr       */
+/*   Updated: 2023/09/21 14:22:57 by noloupe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,13 @@ char	*ft_strcpy(char *dest, char *src);
 
 /*** Signals ***/
 
+void	backslash_new_line(int sig);
+void	get_prompt(int sig);
+void	rl_new_line(int sig);
 void	rl_replace_line(char *s, int n);
 void	signal_handler(int input);
+void	sig_backslash(int sig);
+void	sig_ctrl_c(int sig);
 
 /*** Heredoc ***/
 int		create_heredoc(char *lim);
